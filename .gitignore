@@ -1,0 +1,5 @@
+# Cache directory
+.jekyll-cache
+
+# HTML directory created by Jekyll
+_site
