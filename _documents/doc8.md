@@ -86,7 +86,7 @@ $ bundle exec jekyll serve
 
 ブラウザでlocalhost:4000を開きます。
 
-![ホーム画面](/assets/images/home.png)
+![ホーム画面](../assets/images/home.png)
 
 写真が入るとイメージが良くなりますね。
 
@@ -131,7 +131,7 @@ Sample page をもっともっとよろしく！
 ファイル名は`2022-08-20-The-second-post.md`としました。
 全角文字を使ってもたぶん良いと思います。
 
-![ブログ記事](/assets/images/post.png)
+![ブログ記事](../assets/images/post.png)
 
 このように、ブログの仕組みがテーマに用意されていれば、記事の投稿は簡単です。
 今回使ったMinimal Mistakeは洗練されたデザインで機能も豊富です。
