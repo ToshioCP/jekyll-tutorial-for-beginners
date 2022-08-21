@@ -6,5 +6,5 @@ description: チュートリアルの目次
 ## 目次
 
 {% for doc in site.documents %}
-- [{{doc.chap}}章　{{ doc.title }}]({{ doc.url }})
+- [{{doc.chap}}章　{{ doc.title }}]({{ doc.url | relative_url }})
 {% endfor %}

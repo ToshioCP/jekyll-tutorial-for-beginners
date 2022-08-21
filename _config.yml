@@ -1,6 +1,8 @@
 theme: jekyll-theme-leap-day
 show_downloads: true
 
+baseurl: jekyll-tutorial-for-beginners
+
 title: はじめてのJekyll + GitHub Pages
 description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 

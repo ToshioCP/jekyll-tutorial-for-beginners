@@ -1,12 +1,12 @@
 <ul class="nav">
   <li class="nav">
-    <a href="/index.html">トップページ</a>
+    <a href={{ "/index.html" | relative_url }}>トップページ</a>
   </li>
   <li class="nav">
-    <a href="/about.html">Aboutページ</a>
+    <a href={{ "/about.html" | relative_url }}>Aboutページ</a>
   </li>
   <li class="nav">
-    <a href="/toc.html">目次</a>
+    <a href={{ "/toc.html" | relative_url }}>目次</a>
   </li>
   {% if page.chap > 1  %}
     <li class="nav">
