@@ -1,14 +1,21 @@
 ---
-layout: default
-title: Jekyll tutorial for beginners
+layout: home
+title: はじめてのJekyll + GitHub Pages
+description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 ---
-# jekyll-tutorial-for-beginners
-Jekyll is a framework for static web sites. This repository provides a tutorial in the GitHub page.
 
-# Under Construction
+This website is written in **Japanese**.
 
-This repository contains Jekyll source files for the GitHub page.
+## はじめてのJekyll + GitHub Pages
 
-The contents of the page is a Jekyll tutorial for beginners.
+- Jekyllは静的ウェブサイトを構築するためのフレームワークです。
+- GitHub PagesはJekyllをサポートし、ウェブサイトのスペースを提供するサービスです。
 
-But it is NOT completed yet.
+GitHub Pagesを使えば無料でウェブサイトを作ることができます（ただし商用利用などは制限がある）。
+しかも、Jekyllのテーマを使えば比較的簡単です。
+ところが、カスタマイズを始めるとかなり大変・・・
+
+このサイトは、はじめてGitHub Pagesを使う人を対象に、サイトのカスタマイズまでを具体例で解説するチュートリアルです。
+最初は大変かもしれませんが、Jekyllを使い続けることにより自分好みのレイアウトを蓄積でき、やがてウェブサイトを極めて短時間で制作できるようになります。
+
+ぜひ、あなたもJekyllに挑戦してみませんか？

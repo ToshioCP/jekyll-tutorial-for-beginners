@@ -1,0 +1,21 @@
+<ul class="nav">
+  <li class="nav">
+    <a href="/index.html">トップページ</a>
+  </li>
+  <li class="nav">
+    <a href="/about.html">Aboutページ</a>
+  </li>
+  <li class="nav">
+    <a href="/toc.html">目次</a>
+  </li>
+  {% if page.chap > 1  %}
+    <li class="nav">
+      <a href="doc{{page.chap|minus: 1}}.html">前の章</a>
+    </li>
+  {% endif %}
+  {% if page.chap < site.documents.size %}
+    <li class="nav">
+      <a href="doc{{page.chap|plus: 1}}.html">次の章</a>
+    </li>
+  {% endif %}
+</ul>

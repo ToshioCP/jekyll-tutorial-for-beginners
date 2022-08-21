@@ -1,4 +1,13 @@
 theme: jekyll-theme-leap-day
+show_downloads: true
+
+title: はじめてのJekyll + GitHub Pages
+description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
+
+collections:
+  documents:
+    output: true
+    sort_by: chap
 
 exclude:
   - README.md

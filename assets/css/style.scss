@@ -1,0 +1,12 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+ul.nav {
+  display: flex;
+}
+li.nav{
+  list-style: none;
+  margin-left: 20px;
+}
