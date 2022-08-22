@@ -1,13 +1,13 @@
 ---
-layout: document
-title: Reap-dayのレイアウト
-description: JekyllのテーマであるReap-dayのレイアウトを説明
+layout: chapter
+title: Caymanのレイアウト
+description: JekyllのテーマであるCaymanのレイアウトを説明
 chap: 5
 ---
 
-この章では、Leap-dayテーマのレイアウトを説明します。
-ここでLeap-dayを使うのは、あくまでテーマの一例としてです。
-他のテーマを使う場合にも応用がきくように、レイアウトの仕組みも説明します。
+この章では、Caymanのレイアウトを説明します。
+ここでCaymanを使うのは、あくまでテーマの一例としてで、他のレイアウトとの優劣を問題にするものではありません。
+加えて、一般的なレイアウトの仕組みも説明します。
 
 以下の説明では、`index.md`（サイトの入口にあたるページ）を新たに作成し、そのファイルとレイアウトの関連を見ていきます。 
 
@@ -17,55 +17,50 @@ Jekyllではレイアウトファイルの置き場は`/_layouts`です。
 ただし、最初のスラッシュはJekyllのソースファイルのトップディレクトリです。
 Linuxのルートディレクトリではないので注意してください。
 
-Leap-dayテーマはgemで提供されているので、そのレイアウトはgemがおかれている場所の`_layouts`ディレクトリになります。
+Caymanはgemで提供されるので、そのレイアウトはgemがおかれている場所の`_layouts`ディレクトリになります。
 
 ```
-$ bundle info jekyll-theme-leap-day
-  * jekyll-theme-leap-day (0.2.0)
-	Summary: Leap Day is a Jekyll theme for GitHub Pages
-	Homepage: https://github.com/pages-themes/leap-day
-	Path: （ここにそのPCにおけるjekyll-theme-leap-day-0.2.0のパスが表示される）
-	Reverse Dependencies: 
-		github-pages (227) depends on jekyll-theme-leap-day (= 0.2.0)
+ bundle info jekyll-theme-cayman
+  * jekyll-theme-cayman (0.2.0)
+        Summary: Cayman is a Jekyll theme for GitHub Pages
+        Homepage: https://github.com/pages-themes/cayman
+        Path: /（gemのおいてあるディレクトリ）/jekyll-theme-cayman-0.2.0
+        Reverse Dependencies: 
+                github-pages (227) depends on jekyll-theme-cayman (= 0.2.0)
 ```
 
-そのディレクトリの`default.html`というファイルがleap-dayのレイアウトを記述したファイルになります。
-`default.html`はHTMLファイルですが、Liquidの記述も多く含まれています。
+gemの`_layout`ディレクトリの`default.html`がCaymanのレイアウトを記述したファイルになります。
+`default.html`はHTMLファイルですが、Liquidの記述も含まれています。
 
 ## レイアウトの構成
 
-Leap-dayは次のようなレイアウト構成になっています。
+Caymanは次のようなレイアウト構成になっています。
 
-![Lea-day layout](../assets/images/mypage_layout.png)
+![Cayman layout](../assets/images/mypage_layout.png)
 
-- 上の青い部分が「ヘッダ」で、その中に「タイトル」「ディスクリプション」がある
-- 黄色い部分が「バナー」でアイコンが並んでいる
-- 左側の部分が「ナビゲーション」で、本文の見出しへのリンクが設置されている。
-なお、この部分はJavascriptで動的に生成されています。
-- 中央の白い部分が「コンテンツ」
+- 上の青い部分が「ヘッダ」で、その中に「タイトル」「ディスクリプション」「ボタン」がある
+- 「ボタン」はレポジトリへのリンクとZIP、TAR.GZのダウンロードの3つ
+- 下の白い部分が「コンテンツ」
 
 個々のファイルで変更できるのは「タイトル」「ディスクリプション」「コンテンツ」です。
-また、「ナビゲーション」の部分はコンテンツの見出しが自動的に反映されます。
 
 #### タイトルとディスクリプション
 
-タイトルとディスクリプションは`default.html`の20から23行目で記述されています。
+タイトルとディスクリプションは`default.html`の19、203行目で記述されています。
 
 {% raw %}
 ```html
-<header>
-  <h1>{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
-  <p>{{ page.description | default: site.description | default: site.github.project_tagline }}</p>
-</header>
+<h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+<h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
 ```
 {% endraw %}
 
-HTMLに埋め込まれている{%raw%}`{{`と`}}`{%endraw%}で囲まれている部分はLiquidという一種のプログラミング言語です。
-[LiquidのGItHubページ](https://github.com/Shopify/liquid)では、これを「テンプレート・エンジン」と呼んでいます。
+HTMLに埋め込まれている{%raw%}`{{`と`}}`{%endraw%}で囲まれている部分はLiquidというプログラミング言語です。
+[LiquidのGItHubレポジトリ](https://github.com/Shopify/liquid)では、これを「テンプレート・エンジン」と呼んでいます。
 `h1`タグのところがタイトルです。
 
 ```
-page.title | default: site.title | default: site.github.repository_name
+page.title | default: site.title | default: site.github.repository_name 
 ```
 
 - `page.title`はページのタイトル。
@@ -75,15 +70,13 @@ page.title | default: site.title | default: site.github.repository_name
 - `site.title`はサイトのタイトル。
 例えば、`_config.yml`に`title: サンプルサイト`と書かれていたとすると、「サンプルサイト」が`site.title`に代入される。
 - `site.github.repository_name`はGitHubのレポジトリーの名前。
-ローカルでJekyllを動かすときには、手元にGitHubレポジトリーの情報がない。
-情報は`jekyll-github-metadata` gemがGitHubに問い合わせて取得する。
+ローカルでJekyllを動かすときには、`jekyll-github-metadata` gemがGitHubに問い合わせて情報を取得する。
 - 縦棒`|`はフィルターと呼ばれているLiquidの構文で、左の式の値が右への入力になる。
-これはBashのパイプと似た機能である。
+これはシェル・スクリプトのパイプと似た機能である。
 縦棒を「パイプ」ともいう。
 また、左側の出力と右側の入力をつなげる機能も「パイプ」という。
-「左側の出力がパイプを通って右側の入力になる」というような表現をする。
 - `default:` はフィルターの動作を規定するコマンドで、入力が空文字列、nil、falseのいずれかであればデフォルト値（`default:`の次に書かれている式）をとる。
-それ以外はパイプから入力された式を値とする。
+それ以外であればパイプから入力された式を値とする。
 
 これよりこのLiquidのフィルタは
 
@@ -92,7 +85,7 @@ page.title | default: site.title | default: site.github.repository_name
 - ページタイトルもサイトタイトルもなければ、GitHubレポジトリ名を出力
 
 となります。
-同様にディスクリプションのところも
+同様にディスクリプションも
 
 - ページディスクリプションがあればページディスクリプションを出力
 - ページディスクリプションが無くてサイトディスクリプションがあれば、サイトディスクリプションを出力
@@ -135,36 +128,29 @@ index.mdの参考例：
 
 ```
 ---
-layout: default
+layout: home
 title: はじめてのJekyll + GitHub Pages
 description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 ---
 
-# はじめてのJekyll + GitHub Pages
-
-## Written in Japanese
-
 This website is written in **Japanese**.
-
-## このウェブサイトは未完成です
-
-現在、このウェブサイトは作成途中にあります。
-書かれている内容も十分吟味されておりませんし、変更も多々あります。
-完成までしばらくお待ちください。
 
 ## はじめてのJekyll + GitHub Pages
 
-Jekyllは静的ウェブサイトを構築するためのフレームワークです。
-また、GitHub PagesはJekyllをサポートし、ウェブサイトのスペースを提供するサービスです。
+- Jekyllは静的ウェブサイトを構築するためのフレームワークです。
+- GitHub PagesはJekyllをサポートし、ウェブサイトのスペースを提供するサービスです。
 
-このウェブサイトは、GitHub Pagesでウェブサイトを作るためのチュートリアルです。
+GitHub Pagesを使えば無料でウェブサイトを作ることができます（ただし商用利用などは制限がある）。
+しかも、Jekyllのテーマを使えば比較的簡単です。
 
-- [目次](toc.html)
-- [Aboutページ](about.html)
+このサイトは、はじめてGitHub Pagesを使う人を対象に、サイトのカスタマイズまでを具体例で解説するチュートリアルです。
+最初は大変かもしれませんが、Jekyllを使い続けることにより自分好みのレイアウトを蓄積でき、やがてウェブサイトを極めて短時間で制作できるようになります。
+
+ぜひ、あなたもJekyllに挑戦してみませんか？
 ```
 
 コンテンツはレイアウトの`content`のところに代入されます。
-Leap-dayのレイアウト`default.html`の45行目に`content`があります。
+Caymanのレイアウト`default.html`の31行目に`content`があります。
 
 {% raw %}
 ```
@@ -173,27 +159,21 @@ Leap-dayのレイアウト`default.html`の45行目に`content`があります�
 {% endraw %}
 
 二重のブレース{%raw%}`{{`と`}}`{%endraw%}はLiquidの構文を囲むもので、その値に置き換わります。
-`content`はindex.mdのフロントマターを除いた部分がHTMLに変換されたものが値になります。
+`content`はindex.mdのフロントマターを除いた部分が値になります。
 
-## サイトタイトルとサイトディスクリプション
+## \_config.yamlの更新
 
 サイトタイトルとサイトディスクリプションは`_config.yml`に書きます。
+これらは、ページがタイトル、ディスクリプションを持たない時にヘッダに表示されます。
 
 サイトディスクリプションの例：
 
 ```yaml
-theme: jekyll-theme-leap-day
+theme: jekyll-theme-cayman
 
 title: はじめてのJekyll + GitHub Pages
 description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
-
-exclude:
-  - README.md
 ```
-
-最後に`exclude`がありますが、これはリスト（配列）を値にとり、そのファイルをJekyllの出力生成から除きます。
-index.htmlがサイトの入口になったので、README.mdは出力する必要がなくなりました。
-README.mdはレポジトリーの説明だけのために残します。
 
 ここで、yamlのリストの書き方について簡単に触れておきましょう。
 詳しい説明は[yamlのウェブサイト](https://yaml.org/spec/1.2.2/)にあります。
@@ -215,23 +195,53 @@ README.mdはレポジトリーの説明だけのために残します。
 [ "abc", "def", "ghi" ]
 ```
 
-と同じことです。
-\_config.ymlでは、ハッシュ「exclude」の値がリストになっています。
-そのときは、リストはハッシュに対してインデント（半角空白で字下げ）をしなければなりません。
-このときタブを用いることはできず、かならず半角空白を用います。
-空白の字数は1つ以上であればいくつでも構いませんが、見やすさの点から2文字程度にするのが一般的です。
-また、リストが複数ある場合はインデントの深さは揃えなければなりません。
+ハッシュはコロンで区切って表します。
 
+```
+（キー）: （値）
+```
+
+コロンの後には半角空白が必要です。
+これはRubyのデータ構造ではハッシュになります。
 \_config.ymlをRubyのデータ構造で表すと、
 
 ```ruby
-{ "theme" => "jekyll-theme-leap-day" }
-{ "title" => "はじめてのJekyll + GitHub Pages" }
-{ "description" => "JekyllとGitHub Pagesを使って静的ウェブサイトを作る" }
-{ "exclude" => [ " README.md" ] }
+{ "theme" => "jekyll-theme-leap-day",
+  "title" => "はじめてのJekyll + GitHub Pages",
+	"description" => "JekyllとGitHub Pagesを使って静的ウェブサイトを作る" }
 ```
 
 となります。
+
+\_config.ymlには他にも設定が必要です。
+
+```yaml
+theme: jekyll-theme-cayman
+show_downloads: true
+
+baseurl: /jekyll-tutorial-for-beginners
+lang: ja
+
+title: はじめてのJekyll + GitHub Pages
+description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
+
+collections:
+  chapters:
+    output: true
+
+exclude:
+  - README.md
+```
+
+- show_downloads => レポジトリのデータをダウンロードするボタンを有効にするときはtrue、無効にするときはfalse
+- baseurl => サイトのルートとGitHubのルートのずれを調整する。
+詳しくは第9章で説明。
+- lang => htmlタグに記述する言語を指定。デフォルトはen-US
+- collections => 共通のファイルをまとめたコレクションの記述。
+詳しくは第6章で説明。
+- exclude => Jekyllが出力しないファイルを指定。
+サイトの開始ページindex.mdを作ったのでREADME.mdは出力する必要がない。
+本来README.mdはレポジトリの説明をするもので、サイトとは直接関係ない。
 
 ## Jekyllでテスト
 
@@ -246,14 +256,13 @@ $ bundle exec jekyll serve
 ![index.md](../assets/images/index_md.png)
 
 
-- 最上段のタイトルとディスクリプションは、フロントマターのタイトル、ディスクリプションがコピーされている
-- コンテンツの部分は白い背景になっている中央部分に表示されている
-- コンテンツ左のナビゲーションにはMakdownの見出しへのリンクが自動的に設置されている
+- タイトルとディスクリプションは、フロントマターのタイトル、ディスクリプションがコピーされている
+- コンテンツの部分は白い背景になっている部分に表示されている
 
 Jekyllによる開発で最も時間がかかるのは、レイアウトの作成です。
 それは単にdefault.htmlを書くだけでなく、
 
-- CSS + レスポンシブデザイン
+- CSS
 - Javascript
 - その他
 
@@ -261,8 +270,7 @@ Jekyllによる開発で最も時間がかかるのは、レイアウトの作�
 その他にはサイトのファイル構成なども関わります。
 
 テーマを使うとレイアウトが既にできあがっているので、開発の負担が非常に軽くなります。
-残っているのはコンテンツを加えることだけです。
-これはマークダウンさえ書ければ、誰でもできます。
+残っているのはコンテンツを加えることだけで、マークダウンさえ書ければ誰でもできます。
 
 ### \_siteディレクトリ
 
@@ -292,7 +300,7 @@ $ tree
 
 です。
 生成時には、まず「\_site」の中身を全て削除してから生成します。
-うっかりして「\_site」の中にファイルを作ったりすると、生成時に失くなってしまいます。
+うっかりして「\_site」の中にファイルを手作業で作ったりすると、生成時に失くなってしまいます。
 
 ブラウザには「\_site」の中身が表示されます。
 つまり、このディレクトリがウェブサービスのページを格納しているディレクトリなのです。

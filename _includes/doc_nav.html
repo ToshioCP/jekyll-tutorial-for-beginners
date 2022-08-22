@@ -1,5 +1,5 @@
 <ul class="nav">
-  <li class="nav">
+  <li>
     <a href={{ "/index.html" | relative_url }}>トップページ</a>
   </li>
   <li class="nav">
@@ -10,12 +10,12 @@
   </li>
   {% if page.chap > 1  %}
     <li class="nav">
-      <a href="doc{{page.chap|minus: 1}}.html">前の章</a>
+      <a href="ch{{page.chap|minus: 1}}.html">前の章</a>
     </li>
   {% endif %}
-  {% if page.chap < site.documents.size %}
+  {% if page.chap < site.chapters.size %}
     <li class="nav">
-      <a href="doc{{page.chap|plus: 1}}.html">次の章</a>
+      <a href="ch{{page.chap|plus: 1}}.html">次の章</a>
     </li>
   {% endif %}
 </ul>

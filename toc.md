@@ -5,6 +5,7 @@ description: チュートリアルの目次
 ---
 ## 目次
 
-{% for doc in site.documents %}
+{% assign chaps = site.chapters | sort: "chap" %}
+{% for doc in chaps %}
 - [{{doc.chap}}章　{{ doc.title | escape }}]({{ doc.url | relative_url }})
 {% endfor %}

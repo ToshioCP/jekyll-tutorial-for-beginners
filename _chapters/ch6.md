@@ -1,5 +1,5 @@
 ---
-layout: document
+layout: chapter
 title: レイアウトのカスタマイズ
 description: レイアウトの書き方とLiquidについて
 chap: 6
@@ -10,25 +10,25 @@ chap: 6
 ## ファイルの構成と配置
 
 「Jekyll tutorial for beginners」の構成を考えてみます。
-このサイトのメインはドキュメントで、そのファイルが最も多いです。
+このサイトの内容のメインはJekyllのチュートリアル・ドキュメントで、そのファイルが最も多いです。
 そこで、ドキュメントを一つのディレクトリの下にまとめることにしました。
 ファイルの構成は次のようになります。
 
 - トップページは「index.md」
 - Aboutページは「about.md」。サイトの使い方、ライセンスなどを記述する
-- チュートリアル・ドキュメントは「doc1.md」「doc2.md」・・・。「\_documents」ディレクトリの下に配置する
+- チュートリアル・ドキュメントは「ch1.md」「ch2.md」・・・。「\_chapters」ディレクトリの下に配置する
 - ドキュメントの目次ページは「toc.md」
 
-ディレクトリ名の最初にアンダースコア（`_`）がつくのは、Jekyllのコレクションという機能にあわせるためです。
+ディレクトリ名「\_chapters」の最初にアンダースコア（`_`）がつくのは、Jekyllのコレクションという機能にあわせるためです。
 
 ```
 +--- _config.yml
 +--- index.md
 +--- about.md
 +--- toc.md
-+---_documents
-|       +--- doc1.md
-|       +--- doc2.md
++---_chapters
+|       +--- ch1.md
+|       +--- ch2.md
 |       + ... ... ...
 +---assets
 |       +--- css
@@ -39,16 +39,19 @@ chap: 6
 ```
 
 このファイル構成はそのまま\_siteのファイル構成になります。
-ただし、Markdown＝＞HTML、Scss＝＞Cssとファイル形式は変換されます。
+ただし次の2点が異なります。
+
+- 「\_chapters」が\_siteの中では「chapters」になる（先頭のアンダースコアがなくなる）
+- ファイル形式が変換される（Markdown＝＞HTML、Scss＝＞Css）。そのため拡張子も変わる
 
 各HTMLファイルには他のページへのリンクが必要です。
 リンクはバラバラではなく、まとまって配置するのがユーザ・フレンドリーです。
 そこで、コンテンツ内上部に、横並びに設置する方法を取ることにします。
 このリンクのことをコンテンツ・ナビゲーション（短くして「コナビ」）と呼ぶことにします。
-これは、このブログの中での呼び方で、一般に使われるものではありません。
+これは、このチュートリアルの中での呼び方で、一般に使われるものではありません。
 
 コナビはどのページにも使われますので、それらが共有するレイアウトファイルの中に記述することにします。
-ただし、default.htmlは変更せずに、その子レイアウトとして「home.html」「document.html」を作ります。
+ただし、default.htmlは変更せずに、その子レイアウトとして「home.html」「chapter.html」を作ります。
 
 ## home.html
 
@@ -61,7 +64,7 @@ chap: 6
 layout: default
 ---
 <ul class="nav">
-  <li class="nav">
+  <li>
     <a href="/index.html">トップページ</a>
   </li>
   <li class="nav">
@@ -80,7 +83,7 @@ layout: default
 各ページへのリンクが順序なしリストになっています。
 
 クラス`nav`はスタイルシート・ファイル「style.scss」で定義されています。
-このファイルは`assets/css`フォルダに置きます。
+「style.scss」は`/assets/css`フォルダに置きます。
 
 {% raw %}
 ```css
@@ -102,8 +105,8 @@ li.nav{
 （注意）このファイルの内容はcssと変わりませんが、インポートするファイルがscssなので、拡張子はscssにします。
 
 インポートするファイル名がLiquidのオブジェクト`site.theme`になっています。
-これは`_config.yml`で設定したthemeキーの値で、「jekyll-theme-leap-day」です。
-同名のScssファイルがLeap-dayテーマの中に設定されています。
+`site.theme`の値は`_config.yml`で設定したthemeキーの値で、「jekyll-theme-cayman」です。
+同名のScssファイルがCaymanテーマの`_saas`ディレクトリの中に置かれています。
 
 「index.md」「about.md」「toc.md」のフロントマターのレイアウト設定をdefaultからhomeに変更します。
 ここまでで、index.mdを表示するとコンテンツの最初に3つのリンクが横並びに表示されます。
@@ -113,27 +116,42 @@ li.nav{
 ## コレクション
 
 Jekyllにはコレクションという機能があります。
-コレクションはページ（またはそのページを生成するファイル）を整理し、管理できるようにします。
+コレクションはページ（またはそのページを生成する元ファイル）を整理し、管理できるようにします。
 
-例えば「doc1.md」「doc2.md」・・・は「チュートリアルのドキュメント」という括りでまとめられます。
-これらを「\_documents」ディレクトリの下に入れることにより、他のファイルと区別でき、ルートディレクトリもすっきりします。
+例えば「ch1.md」「ch2.md」・・・は「チュートリアルの章」という括りでまとめられます。
+これらを「\_chapters」ディレクトリの下に入れることにより、他のファイルと区別できます。
+全体としてもより整理され、分かりやすくなります。
 そしてコレクションは`_config.yml`の中で定義します。
 コレクション名はディレクトリ名から先頭のアンダースコアを取ったものになります。
 
 ```yaml
 collections:
-  documents:
+  chapters:
     output: true
-    sort_by: chap
 ```
 
 - コレクションは「collections」をキーとするハッシュで表す
-- この例では「documents」がコレクション名で、更にその属性がハッシュで表される
-- デフォルトではコレクションは出力されないので「output: true」で出力されるようにする
-- 「sort_by」は、コレクション内のページの配列を生成するときの並び順を定義する。
-「chap」は章の番号で、各ドキュメントファイルのフロントマターで定義する
+- この例では「chapters」がコレクション名で、更にその属性がハッシュで表される
+- 「chapters」はLiquidから参照できる。
+それは配列で、その要素はディレクトリ内のファイルを表すページ・オブジェクトである。
+- デフォルトではコレクションは出力されない。「output: true」は、それを出力されるように変更する
 
-この定義により、Liquidのタグなどで`site.documents`が「documentsコレクション」を表すようになります。
+※　Jekyllのver4からは「sort_by」オプションが導入され、コレクションの要素の並び順を定義できます。
+例えば「sort_by: chap」とすると章の番号（各ドキュメントのフロントマター要素）で昇順にソートされます。
+しかし、現時点（2022/8/23）のGitHubのJekyllのバージョンが3.9.2であり、sort_byはサポート外です。
+そこでこのチュートリアルでもsort_byを使っていません。
+
+この定義により、Liquidのタグなどで`site.chapters`が「chaptersコレクション」を表すようになります。
+例えば、次のプログラムでは、各章のタイトルが出力されます。
+forはLiquidのコマンドです。第9章に説明があります。
+
+{%raw%}
+```html
+{% for p in site.chapters %}
+  {{ p.title }}
+{% endfor %}
+```
+{%endraw%}
 
 ## ドキュメントのレイアウト
 
@@ -150,38 +168,38 @@ collections:
 {% raw %}
 ```
 <ul class="nav">
-  <li class="nav">
-    <a href="/index.html">トップページ</a>
+  <li>
+    <a href={{ "/index.html" | relative_url }}>トップページ</a>
   </li>
   <li class="nav">
-    <a href="/about.html">Aboutページ</a>
+    <a href={{ "/about.html" | relative_url }}>Aboutページ</a>
   </li>
   <li class="nav">
-    <a href="/toc.html">目次</a>
+    <a href={{ "/toc.html" | relative_url }}>目次</a>
   </li>
   {% if page.chap > 1  %}
     <li class="nav">
-      <a href="doc{{page.chap|minus: 1}}.html">{{chap}}前の章</a>
+      <a href="ch{{page.chap|minus: 1}}.html">前の章</a>
     </li>
   {% endif %}
-  {% if page.chap < site.documents.size %}
+  {% if page.chap < site.chapters.size %}
     <li class="nav">
-      <a href="doc{{page.chap|plus: 1}}.html">次の章</a>
+      <a href="ch{{page.chap|plus: 1}}.html">次の章</a>
     </li>
   {% endif %}
 </ul>
 ```
 {% endraw %}
 
-上から10行までは`home.html`のレイアウトに書いた内容と同じです。
+上から10行までは`home.html`と同じです。
 {%raw%}`{%`と`%}`{%endraw%}で囲まれたものはLiquidのタグと呼ばれます。
 ここにはプログラムのコントロール・フロー（if, else, unlessなどの条件分岐）などを書くことができます。
 
 {% raw %}
-```html
+```
 {% if page.chap > 1  %}
   <li class="nav">
-    <a href="doc{{page.chap|minus: 1}}.html">{{chap}}前の章</a>
+    <a href="ch{{page.chap|minus: 1}}.html">前の章</a>
   </li>
 {% endif %}
 ```
@@ -190,7 +208,7 @@ collections:
 ifの条件は「そのページの章（chap）が1より大きい」すなわち「第2章以降」で、このときは「前の章」が存在します。
 条件が成立する時にifとendifで囲まれた部分が出力されますが、その出力内容は「前の章へのリンク」です。
 
-例えば第3章の前は第2章で、ファイル名は「doc2.html」（変換後なので拡張子は.mdではない）になります。
+例えば第3章の前は第2章で、ファイル名は「ch2.html」（変換後なので拡張子は.mdではない）になります。
 数字の2にあたる部分はLiquidのオブジェクト（{%raw%}`{{`と`}}`{%endraw%}で囲まれた部分）で表されています。
 
 {% raw %}
@@ -209,18 +227,18 @@ Liquidには算術演算子がありません。
 
 {% raw %}
 ```
-{% if page.chap < site.documents.size %}
+{% if page.chap < site.chapters.size %}
   <li class="nav">
-    <a href="doc{{page.chap|plus: 1}}.html">次の章</a>
+    <a href="ch{{page.chap|plus: 1}}.html">次の章</a>
   </li>
 {% endif %}
 ```
 {$endraw %}
 
-ほとんど同じですが、`site.documents.size`のところが新たな内容です。
+ほとんど同じですが、`site.chapters.size`のところが新たな内容です。
 変数`site`にコレクション名をつけ、更に`size`をつけています。
 
-- `site.documents`はdocumentsコレクションに属するページの配列を返す
+- `site.chapters`はchaptersコレクションに属するページの配列を返す
 - `size`は文字列の文字数や配列の要素数を返す。
 本来パイプ（`|`）とともに使われるフィルターだが、
 タグ（<%raw%}`{%`と`%}`{%endraw%}で囲まれた部分）では、ドット（`.`）記法が使える。
@@ -229,7 +247,7 @@ Liquidには算術演算子がありません。
 
 ### ドキュメントのレイアウト
 
-ドキュメントのレイアウトは`document.html`です。
+ドキュメントのレイアウトは`chapter.html`です。
 
 {% raw %}
 ```html
@@ -249,21 +267,21 @@ layout: default
 
 ## ドキュメント
 
-ドキュメント（doc1.mdなど）のフロントマターにはchapを入れます。
+ドキュメントのフロントマターにはchapを入れます。
 例えば、第1章のドキュメントのフロントマターは次のようになります。
 
 ```
 ---
-layout: document
+layout: chapter
 title: Jekyll、GitHub Pagesとは
 description: JekyllとHitHub Pagesの基礎知識
 chap: 1
 ---
 ```
 
-- レイアウトはdocument.htmlを使う
-- タイトルとディスクリプションを指定＝＞default.html（document.htmlの親レイアウト）で使われる
-- chapは章の番号を表す＝＞document.htmlで使われる
+- レイアウトはchapter.htmlを使う
+- タイトルとディスクリプションを指定＝＞default.html（chapter.htmlの親レイアウト）で使われる
+- chapは章の番号を表す＝＞chapter.htmlで使われる
 
 ## 目次
 
@@ -271,7 +289,7 @@ chap: 1
 以下は`toc.md`のソースコードです。
 
 {% raw %}
-```markdown
+```
 ---
 layout: home
 title: 目次
@@ -279,16 +297,17 @@ description: チュートリアルの目次
 ---
 ## 目次
 
-{% for doc in site.documents %}
-- [{{doc.chap}}章　{{ doc.title }}]({{ doc.url }})
+{% assign chaps = site.chapters | sort: "chap" %}
+{% for doc in chaps %}
+- [{{doc.chap}}章　{{ doc.title | escape }}]({{ doc.url | relative_url }})
 {% endfor %}
 ```
 {% endraw %}
 
-下3行が目次を生成する部分です。
+下4行が目次を生成する部分です。
 
-- `site.documents`はdocumentsコレクションに含まれるページの配列。
-この配列は章の番号順に並ぶことが`_config.yml`の設定で保証されている
+- `site.chapters`はchaptersコレクションに含まれるページの配列。
+この配列を章の番号順に並ぶように、chapをキーとしてソートし、変数chapsに代入する
 - for文は変数docに次々と配列要素を入れてループする
 - {%raw%}`{{doc.chap}}`{%endraw%}はそのページの章番号になる
 - {%raw%}`{{doc.title}}`{%endraw%}はそのページのタイトル
@@ -296,42 +315,6 @@ description: チュートリアルの目次
 
 このようにして、各章へのリンクがMarkdownのリストとして生成されます。
 
-## Leap dayの日本語対応
-
-Leap dayのJavascript（jQuery）は、見出しが日本語のときに上手く動作しません。
-修正は、次のようにします。
-
-- `assets/js`ディレクトリを作る
-- Leap dayのgemの場所を調べる（`$ bundle info jekyll-theme-leap-day`でパスが表示される）
-- Leap dayの`assets/js/main.js`を最初に作った`assets/js`の下にコピーする
-- 下記のようにmain.jsを修正する
-
-```javascript
-... ... ...
-... ... ...
-$(window).resize(sectionHeight);
-
-var tag_number = 1;
-
-$(function() {
-  $("section h1, section h2, section h3").each(function(){
-    $("nav ul").append("<li class='tag-" + this.nodeName.toLowerCase() + "'><a href='#tag_" + String(tag_number) + "'>" + $(this).text() + "</a></li>");
-    $(this).attr("id","tag_"+String(tag_number));
-    ++tag_number;
-    $("nav ul li:first-child a").parent().addClass("active");
-  });
-});
-... ... ...
-... ... ...
-```
-
-変更箇所は4ヶ所です。
-
-- var tag\_number = 1;
-- $(function()から2-3行目のString(tag\_number)に置き換える部分（2ヶ所）
-- ++tag\_number
-
-手作業では間違いやすいのでコピペするのが良いと思います。
-
-以上のようにしてできあがったのがこのウェブサイト「はじめてのJekyll + GitHub Pages」です。
-サイトのレイアウトとこの章の説明を比べてみてください。
+このウェブサイト「はじめてのJekyll + GitHub Pages」はこの章で説明したプログラムを使っています。
+ぜひレポジトリをクローンしてレイアウトやドキュメント、目次のソースファイルを読んでください。
+より一層理解を深めることができると思います。

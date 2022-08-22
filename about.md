@@ -15,12 +15,16 @@ description: このウェブサイトの使い方
 
 - Linuxオペレーティング・システム
 - Ruby
-- [レポジトリ](https://github.com/ToshioCP/jekyll-tutorial-for-beginners)からダウンロード
+
+### ダウンロード
+
+- [レポジトリ](https://github.com/ToshioCP/jekyll-tutorial-for-beginners)をGitでクローン
+- または、このページの「Download .zip」または「Download .tar.gz」ボタンをクリックしてダウンロード
 
 ### 手順
 
-- ダウンロードしたディレクトリにカレントディレクトリを移動
-- `bundle install`とコマンドラインから入力
+- ダウンロード（解凍）したディレクトリにカレントディレクトリを移動
+- `bundle install`
 - `bundle exec jekyll serve`
 - ブラウザを立ち上げ、`localhost:4000`を開く
 

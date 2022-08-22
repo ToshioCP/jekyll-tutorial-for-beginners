@@ -1,5 +1,5 @@
 ---
-layout: document
+layout: chapter
 title: Liquidの概要
 description: JekyllのHTMLテンプレート言語Liquidについて
 chap: 9
@@ -90,6 +90,10 @@ site: http://username.github.io/
 ```
 
 この情報はドット記法を使って「site.url」で参照できます。
+
+（注）`site.url`を設定してレイアウトやコンテンツ内で使う場合、画面遷移のリンクには使わないでください。
+ローカルと公開サーバでurlが違うので、ローカルで遷移が機能しなくなります。
+
 グローバル変数の主なプロパティについては[Jekyllのドキュメント](https://jekyllrb.com/docs/variables/)を参照してください。
 
 ## Liquidのオペレーター

@@ -1,5 +1,5 @@
 ---
-layout: document
+layout: chapter
 title: ブログの作り方
 description: Jekyllでブログを公開する
 chap: 8
@@ -8,15 +8,18 @@ chap: 8
 ## Minimal Mistakes
 
 Jekyllでブログを始めるなら、ブログをサポートしているテーマを使うのが良い方法です。
-ちなみに今まで例として使ったLeap dayはブログをサポートしていません。
+ちなみにCaymanはブログをサポートしていません。
 
 Jekyllのテーマを探すには、Jekyllのウェブサイトの[Resources](https://jekyllrb.com/resources/)を見てください。
 そこにたくさんのテーマへのリンクが貼られています。
 
 ここでは、その中からMinimal Mistakes使い、ブログを作ってみます。
 なお、ここではローカルで動かします。
-GitHubと連携するには別の方法が必要です。
-[Minimal Mistakesのドキュメント](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)を参考にしてください。
+
+もし、あなたがMinimal MistakesをGitHubで使おうとしても、今までの方法だけではうまくいきません。
+Minimal MistakesはCaymanと違い、GitHubがその内部にgemを持っていないので、\_config.ymlにテーマ名を書くだけでは動かないのです。
+テーマそのものをレポジトリに含めるか、リモートでテーマを設定することが必要です。
+詳しくは、[Minimal Mistakesのドキュメント](https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/)を参考にしてください。
 
 ## インストール
 
@@ -140,7 +143,7 @@ Sample page をもっともっとよろしく！
 ## ブログの仕組みを一から作る方法
 
 テーマがブログをサポートしているとは限りません。
-例えばLeap dayがそうです。
+例えばCaymanがそうです。
 ブログ機能が無ければ一から自分で作らなければなりません。
 といっても、それは大変な作業ではありません。
 デフォルトのテーマminimaがブログをサポートしているので、それを参考に作るのが早いです。

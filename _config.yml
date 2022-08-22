@@ -2,14 +2,14 @@ theme: jekyll-theme-cayman
 show_downloads: true
 
 baseurl: /jekyll-tutorial-for-beginners
+lang: ja
 
 title: はじめてのJekyll + GitHub Pages
 description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 
 collections:
-  documents:
+  chapters:
     output: true
-    sort_by: chap
 
 exclude:
   - README.md
