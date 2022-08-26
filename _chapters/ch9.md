@@ -209,19 +209,22 @@ https:のついた絶対URLとは振る舞いが違います。
 `/`（ルート）がどこに設定されるのかはサーバによります。
 GitHub Pagesでは`/`は`https;//username.github.io/`と解釈されます。
 ですから、Jekyllで構築したサイトのルート`https;//ユーザ名.github.io/jekyll-tutorial-for-beginners/`はGitHubのルートとずれがあるわけです。
-この差`jekyll-tutorial-for-beginners`をJekyllではBase URLといいます。
+この差をJekyllではBase URLといいます。
+正確には先頭にスラッシュをつけた`/jekyll-tutorial-for-beginners`がBase URLです。
 
 relative_urlフィルターは流れてきた文字列の先頭にBase URLを付け加えます。
 なお、Base URLは\_config.ymlの中で定義します。
 
+{%raw%}
 ```
 _config.yml での定義
-baseurl: jekyll-tutorial-for-beginners
+baseurl: /jekyll-tutorial-for-beginners
 
 {{ "/assets/image/abc.png" | relative_url }}
 これにより、出力は次のようになる
 => /jekyll-tutorial-for-beginners/assets/images/abc.png
 ```
+{%endraw%}
 
 このことによって、サイトのルートがGitHubのルートに一致するようになります。
 なお、baseurlのデフォルト値は空文字列です。
