@@ -88,7 +88,7 @@ href=の右のリンク先アドレスはLiquidで書かれています。
 最初のリンク先は
 
 ```
-{{ "/index.html" | relative_url }} => "/jekyll-tutorial-for-beginners/index.html"
+{%raw%}{{ "/index.html" | relative_url }}{%endraw%} => "/jekyll-tutorial-for-beginners/index.html"
 ```
 となります。
 relative\_urlが必要かどうかは、JekyllソースデータのルートとGitHub上のルートにずれがあるかないかによります。
