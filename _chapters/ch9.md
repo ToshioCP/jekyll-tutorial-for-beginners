@@ -10,6 +10,11 @@ Liquidには簡潔なドキュメントがありますので、参考にして�
 
 <https://shopify.github.io/liquid/>
 
+Jekyllは独自にLiquidの拡張をしています。
+これについては次のページに説明があります。
+
+<https://jekyllrb.com/docs/liquid/filters/>
+
 ## Liquidの基本
 
 LiquidはHTMLの中に埋め込みます。

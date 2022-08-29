@@ -175,7 +175,7 @@ title: はじめてのJekyll + GitHub Pages
 description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 ```
 
-ここで、yamlのリストの書き方について簡単に触れておきましょう。
+ここで、yamlの書き方について簡単に触れておきましょう。
 詳しい説明は[yamlのウェブサイト](https://yaml.org/spec/1.2.2/)にあります。
 
 リストは`-`と半角空白で表します。
@@ -208,7 +208,7 @@ description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 ```ruby
 { "theme" => "jekyll-theme-leap-day",
   "title" => "はじめてのJekyll + GitHub Pages",
-	"description" => "JekyllとGitHub Pagesを使って静的ウェブサイトを作る" }
+  "description" => "JekyllとGitHub Pagesを使って静的ウェブサイトを作る" }
 ```
 
 となります。
@@ -253,7 +253,7 @@ $ bundle exec jekyll serve
 
 ここでブラウザを立ち上げ、「`localhost:4000`」を開きます。
 
-![index.md](../assets/images/index_md.png)
+![index.md](../assets/images/mypage.png)
 
 
 - タイトルとディスクリプションは、フロントマターのタイトル、ディスクリプションがコピーされている

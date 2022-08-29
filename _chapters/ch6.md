@@ -65,22 +65,33 @@ layout: default
 ---
 <ul class="nav">
   <li>
-    <a href="/index.html">トップページ</a>
+    <a href={{ "/index.html" | relative_url }}>トップページ</a>
   </li>
   <li class="nav">
-    <a href="/about.html">Aboutページ</a>
+    <a href={{ "/about.html" | relative_url }}>Aboutページ</a>
   </li>
   <li class="nav">
-    <a href="/toc.html">目次</a>
+    <a href={{ "/toc.html" | relative_url }}>目次</a>
   </li>
 </ul>
-{{ content }}
-```
+{{ content }}```
 {% endraw %}
 
 フロントマターに`layout: default`があるので、home.htmlはdefault.htmlのコンテンツの部分に表示されます。
 
 各ページへのリンクが順序なしリストになっています。
+
+href=の右のリンク先アドレスはLiquidで書かれています。
+`| relative_url`は左から流れ込んだ入力のアドレスに`_config.yml`で指定したBase URLを付け足します。
+ここでは、Base URLは`/jekyll-tutorial-for-beginners`です。
+最初のリンク先は
+
+```
+{{ "/index.html" | relative_url }} => "/jekyll-tutorial-for-beginners/index.html"
+```
+となります。
+relative\_urlが必要かどうかは、JekyllソースデータのルートとGitHub上のルートにずれがあるかないかによります。
+一般には「relative\_urlフィルターをつけるのが最善」です。
 
 クラス`nav`はスタイルシート・ファイル「style.scss」で定義されています。
 「style.scss」は`/assets/css`フォルダに置きます。
@@ -233,7 +244,7 @@ Liquidには算術演算子がありません。
   </li>
 {% endif %}
 ```
-{$endraw %}
+{%endraw %}
 
 ほとんど同じですが、`site.chapters.size`のところが新たな内容です。
 変数`site`にコレクション名をつけ、更に`size`をつけています。
