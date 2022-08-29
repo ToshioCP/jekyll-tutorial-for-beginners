@@ -74,7 +74,8 @@ layout: default
     <a href={{ "/toc.html" | relative_url }}>目次</a>
   </li>
 </ul>
-{{ content }}```
+{{ content }}
+```
 {% endraw %}
 
 フロントマターに`layout: default`があるので、home.htmlはdefault.htmlのコンテンツの部分に表示されます。
