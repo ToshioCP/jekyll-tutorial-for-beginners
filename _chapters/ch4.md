@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: GitHub pageのローカル・テスト
+title: GitHub pagesのローカル・テスト
 description: GitHub pagesで作成したサイトをローカルでテストする
 chap: 4
 ---
@@ -19,7 +19,7 @@ GitHubは、Git（バージョン管理アプリ）＋Hub（中心、ネット�
 
 ## Gitのインストール
 
-Linuxではディストリビューションにパッケージがあります。
+LinuxではディストリビューションにGitのパッケージがあります。
 Ubuntuならば、
 
 ```
@@ -46,15 +46,26 @@ $ git config --global user.email "メールアドレス"
 
 ユーザ名に空白がある場合、例えば「Taro Yamada」のような場合、ダブルクォートで囲む必要があります。
 これは、Bashが空白を引数の区切りと解釈するためです。
-このユーザ名はコミットで使われ、プッシュするとGitHubにも反映されますので、GitHubのユーザ名と一致させてください。
 
-Gitでコミットするときにエディタが必要になりますが、その設定は
+Gitのユーザ名とGitHubのユーザ名は別物です。
+その2つを違うものに設定することは可能ですが、同一にすることによって無用の混乱を避けるという考えもあると思います。
+（ただこのことをシリアスに考える必要はありません。
+実際、異なる名前を設定しているユーザは大勢います）
+
+Gitのユーザ名とメールアドレスはコミットに記録されます（コミットは第7章で説明します）。
+そのコミットがGitHubにプッシュされると、GitHubはこのメールアドレスでコミットをGitHubユーザにリンクし、そのGitHubユーザ名をコミッターにして表示します。
+この機能が正しく行われるように、GitのメールアドレスはGitHubに登録したときのものと同じにしてください。
+
+他のユーザがレポジトリをクローンすると、そのユーザはコミットを（ローカルのGitを使って）見ることができます。
+そのコミットにはコミッターがGitに設定したユーザ名とメールアドレスも書かれています。
+つまり、Gitに登録したユーザ名とメールアドレスはGitHubを通して公開されるということに注意してください。
+
+Gitで使うエディタを設定することができます。
 
 ```
 $ git config --global core.editor エディタ名
 ```
 
-です。
 設定をしないとデフォルトのエディタ（Ubuntuではnano）が使われます。
 
 ### GitHubレポジトリのクローン
@@ -75,7 +86,7 @@ $ git config --global core.editor エディタ名
 クリックしても何も目に見える変化はありませんが、実はパソコンのクリップボードにレポジトリのアドレスがコピーされています。
 
 - 端末（Windowsではコマンドプロンプト、以下は「端末」と表示）から、「git clone （クリップボードをペースト）」と入力する。
-クリップボードからペーストするには、Linuxでは「Shift+Ctrl+V」を、Windowsでは「Ctrl+V」を押す。
+クリップボードからペーストするには、Linuxでは「Ctrl+Shift+V」を、Windowsでは「Ctrl+V」を押す。
 Windowsで上手く行かない場合は、コマンドプロンプトの設定ができていない可能性がある。
 「コマンドプロンプトでコピペ」でグーグル検索するとやり方がヒットしますので、参照してください。
 - エンターキーを押すと、レポジトリがクローンされる。
@@ -89,7 +100,7 @@ Windowsで上手く行かない場合は、コマンドプロンプトの設定�
 
 ### レポジトリの状態確認
 
-端末のカレントディレクトリをクローンされたレポジトリに移動します。
+端末のカレントディレクトリをクローンしたレポジトリに移動します。
 レポジトリの状態を確認するには次のようにタイプします。
 
 ```
@@ -103,29 +114,27 @@ nothing to commit, working tree clean
 - 「status」は状態、状況のこと。
 - ブランチの意味については、ここでは説明を省略する。
 操作の対象となっているのが「main」（というブランチ）だということが、表示されている。
-- 次の英語は「ブランチは'origin/main'（これはGitHubのレポジトリのこと）とともに、最新にアップデートされています」という意味。
-- 最後の行は「（新たな）コミットはなし。ワークツリーには何も（新しいことが）無し」ということ。
+- 次の英語は「ブランチは'origin/main'（これはGitHubのレポジトリのこと）とともに、アップデートされています」という意味。
+- 最後の行は「（新たに）コミットするようなものはなし。ワークツリーはクリーン（新たに加わったものはない）」ということ。
 ワークツリーはこのディレクトリ（これを作業ディレクトリともいう）のこと。
 例えば、このディレクトリに新しいファイルを作ることは「ワークツリーに新規ファイルを作成」することになる。
 
 ## Jekyllをローカルで使う
 
-クローンされたレポジトリでJekyllを動かしてみましょう。
+クローンしたレポジトリでJekyllを動かしてみましょう。
 ローカルで動かすためにはいくつか準備が必要です。
 
 ### gethub-pages gem
 
 ローカルではBundlerとGemfileを使います。
-Gemfileはそのレポジトリで使うRubyのライブラリを記述します。
-「gem」（ジェム）は英語で宝石のことです。
-Rubyの用語では、「gem」はRubyのライブラリを指します。
+Gemfileにはそのレポジトリで使うRubyのライブラリを記述します。
+Rubyではライブラリのことを「gem」（ジェム、英語で宝石のこと）といいます。
 さらに、
 
-- ライブラリであるgemをまとめた[Rubygems](https://rubygems.org/)からライブラリをダウンロードするコマンドも「gem」。
+- ライブラリ（gem）をまとめた[Rubygems](https://rubygems.org/)からgemをダウンロードするコマンドも「gem」。
 例えば「`gem install jekyll`」とすると、jekyllをダウンロードできる。
-gemではなくbundlerというコマンドを使うことも多い。
-ただ、それはgemコマンドが必要なくなったということではない。
-gemとbundlerでは動作が違うので状況で使い分ける。
+bundlerというコマンドでgemをインストールすることも多いが、それはgemコマンドが必要ないということではない。
+gemとbundlerは動作が違うので状況で使い分ける。
 - Rubygemsとパッケージ管理の全体を指して「gem」ということもある。
 
 Gemfileの記述では、必要なライブラリ名を「gem」の後に続けます。
@@ -138,16 +147,17 @@ gem "webrick"
 ```
 
 - 最初の行はライブラリを[Rubygems](https://rubygems.org/)から取得するという意味。
-- 「github-pages」は、GitHubでjekyllを動かすのと同じ環境を構築するためのgem。これを指定すると「jekyll」や「jekyll-theme-reap-day」などもインストールされる。
+- 「github-pages」は、GitHubと同じ環境を構築するためのgem。
 - 「webrick」はJekyllがローカルでウェブサーバとして振る舞うために使われるライブラリ。
 Ruby3.0以降ではWebrickが標準添付ではなくなったので、gemをインストールしなければならない。
 
 ここで`github-pages`gemについて説明しておきます。
 
-GitHubでは、レポジトリからページを作成する時に、内部でJekyllや必要なgemが使われます。
-私達はローカルでページを構築しようとしていますが、もしJekyllやその他のgemのバージョンがGitHubと違っていたらどうなるでしょうか？
-その場合、出力結果が異なる可能性があります。
-ですから、バージョンは全く同じものをローカルでも用意しなければなりません。
+GitHubでは、レポジトリからページを作成する時にgemが使われます。
+私達はローカルでページを構築していますが、もしJekyllなどのgemのバージョンがGitHubと違っていたらどうなるでしょうか？
+異なるバージョンでは動作が異なる可能性がありますから、生成されるHTMLファイルにも違いができるかもしれません。
+これはローカルの実行がGitHubのテストにはならないということを意味します。
+ですから、ローカルのgemとGitHubのgemのバージョンは全て一致させなければなりません。
 
 ところで、GitHubで使うgemのバージョンは公開されています
 
@@ -162,13 +172,14 @@ GitHubでは、レポジトリからページを作成する時に、内部でJe
 gem "github-pages", "~> 227", group: :jekyll_plugins
 ```
 
-gemメソッドの2番めの引数「~> 227」は、先程のページの`github-pages`gemのバージョンです。
+gemメソッドの2番めの引数「~> 227」は、先程のGitHubのgemバージョン一覧に載っていた`github-pages`のバージョンです。
 「~>」は「メジャーバージョンは同じで、マイナーバージョンが指定されたもの以上」という意味です。
 Gemfileの書き方は次のセクションで説明します。
 
-`github-pages`のバージョンは比較的頻繁に変わるので、書き換えが必要になることに注意しましょう。
+`github-pages`のバージョンは比較的頻繁に変わるので注意しましょう。
+バージョンの変更によってはサイト全体の見直しが必要になる可能性もあります。
 
-Gemfileを記述したら、Bundlerでインストールをします。
+Gemfileを記述したら、Bundlerでインストールします。
 BundlerはRuby2.6.0から標準添付されているので、特にインストールの必要はありません。
 
 ```
@@ -184,28 +195,28 @@ $
 
 「bundle」はBundlerを端末から起動するためのコマンド名です。
 「install」はgemをインストールするサブコマンドです。
-BundlerはGemfileから、記述されているgemが依存するgemとそのバージョンをすべて調べ、「Gemfile.lock」というファイルに書き出します。
+BundlerはGemfileを読み、そこに記述されているgemとその依存gemのバージョンをすべて調べ、「Gemfile.lock」というファイルに書き出します。
 さらに、それらすべてをインストールします。
 「Gemfile.lock」に書かれたバージョンのgemを起動するには「bundle exec」コマンドを使います。
-例えば「bundle exec jekyll serve」のようになります。
+例えば「bundle exec jekyll serve」は「jekyll」をserve引数付きで起動します。
 「bundle exec」なしで「jekyll serve」としないでください。
 もしそうすると「Gemfile.lock」とは無関係にjekyllを起動することになるので
 
-- JekyllをBundlerなしでインストール（例えば「gem install jekyll」など）していなければJekyllを起動できない
-- バージョンの違うJekyllが起動される可能性がある
+- JekyllをBundlerなしでインストール（例えば「gem install jekyll」など）していなければ、Jekyllを起動できない場合がある
+- バージョンの違うJekyllが起動される可能性がある。また、Jekyllが使用するgemも異なるバージョンが呼び出される可能性がある
 
 したがって、レポジトリ内では常に「bundle exec」をつけてgemを起動するようにしてください。
 
 ```
 $ bundle exec jekyll serve
-Configuration file: /（クローンの親ディレクトリ）/jekyll-tutorial-for-beginners/_config.yml
-            Source: /（クローンの親ディレクトリ）/jekyll-tutorial-for-beginners
-       Destination: /（クローンの親ディレクトリ）/jekyll-tutorial-for-beginners/_site
+Configuration file: /（クローンしたディレクトリ）/jekyll-tutorial-for-beginners/_config.yml
+            Source: /（クローンしたディレクトリ）/jekyll-tutorial-for-beginners
+       Destination: /（クローンしたディレクトリ）/jekyll-tutorial-for-beginners/_site
  Incremental build: disabled. Enable with --incremental
       Generating... 
    GitHub Metadata: No GitHub API authentication could be found. Some fields may be missing or have incorrect data.
                     done in 0.129 seconds.
- Auto-regeneration: enabled for '/（クローンの親ディレクトリ）/jekyll-tutorial-for-beginners'
+ Auto-regeneration: enabled for '/（クローンしたディレクトリ）/jekyll-tutorial-for-beginners'
     Server address: http://127.0.0.1:4000
   Server running... press ctrl-c to stop.
 ```
@@ -238,10 +249,10 @@ gem 'mnop',  '~>2.1'
 - `efgh`はバージョン`3.0.0`のものがインストールされる
 - `ijkl`のバージョン`1.0`以上のものがインストールされる
 - `mnop`はバージョンが`2.1`以上で`3.0`未満がインストールされる。
-`~>では、最後のドットの前は変わらない。
+`~>`では、最後のドットの前は変わらない。
 例えば`~>1.2.3.4`は`1.2.3.4`以上`1.2.4`未満。
 
-公開されたRubyプログラムがGemfileを持っていれば、それをダウンロードした誰もが同じバージョンを使うことになります。
+一般に、公開されたRubyプログラムがGemfileを持っていれば、それをダウンロードした誰もが同じバージョンを使うことになります。
 それによって、バージョンの違いによる誤動作を防ぐことができます。
 
 ### jekyll-github-metadataの警告メッセージ
@@ -252,7 +263,7 @@ GitHub Metadata: No GitHub API authentication could be found. Some fields may be
 
 はじめに「GitHub Metadata:」とあるので、`jekyll-github-metadata` gemの発出したメッセージであることがわかります。
 このgemは`gethub-pages`でインストールが指定されていたgemの1つです。
-内容は、「GitHub APIの認証が見つかりませんでした。 一部のフィールドが欠落しているか、データが正しくない可能性があります。」ということですが、これだけでは何のことかわかりません。
+メッセージは、「GitHub APIの認証が見つかりませんでした。 一部のフィールドが欠落しているか、データが正しくない可能性があります。」ということですが、これだけでは何のことかわかりません。
 [jekyll-github-metadataのウェブサイトのAuthenticationページ](http://jekyll.github.io/github-metadata/authentication/)を見ると、次のようなことが書いてあります。
 
 - cname などの一部のフィールドでは、自分自身を認証する必要がある。
@@ -262,7 +273,7 @@ GitHub Metadata: No GitHub API authentication could be found. Some fields may be
 - OCTOKIT_ACCESS_TOKEN環境変数にPATをセットしてJekyllを起動する（1番目とほぼ同じ）
 
 この3つのうちのどれかをすれば警告メッセージは無くなります。
-（ただ、エラーではないので、無視してもそれほど大きな問題にはなりません）。
+（ただ、警告はエラーではないので、無視してもそれほど大きな問題にはなりません）。
 1番目と3番目の環境変数を使うのが簡単ですが、毎回これをするのは煩わしいです。
 その点、2番めは一度セットすれば後は何もしなくて良いのが利点です。
 

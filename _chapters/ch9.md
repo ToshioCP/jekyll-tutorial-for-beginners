@@ -5,7 +5,7 @@ description: JekyllのHTMLテンプレート言語Liquidについて
 chap: 9
 ---
 
-この章では、Jekyllでサイトを作る上で中心となるLiquidのポイントを説明します。
+この章では、Jekyllでサイトを作る上で中心となるLiquidを説明します。
 Liquidには簡潔なドキュメントがありますので、参考にしてください。
 
 <https://shopify.github.io/liquid/>
@@ -35,7 +35,7 @@ LiquidはHTMLの中に埋め込みます。
 titleやdescriptionはpageオブジェクトのプロパティです。
 ページのフロントマターに記述されたものはプロパティになり、ドット記法で参照することができます。
 
-オブジェクトをHTMLの中に表示するには二重波カッコを使います。
+オブジェクトをHTMLの中に埋め込んで表示するには二重波カッコを使います。
 
 {%raw%}
 ```
@@ -73,7 +73,7 @@ escapeはHTMLで特殊な意味を持つ記号をエスケープします。
 例えば&lt;を&amp;lt;と変更します。
 
 フィルターには多くの種類があります。
-他の言語における演算子やメソッドの役割をフィルターが担っています。
+また、他の言語における演算子やメソッドの役割をフィルターが担っています。
 
 ## Jekyllで使う変数
 
@@ -123,7 +123,7 @@ Liquidには算術演算子（加減乗除）がありません。
 
 ## タグ（Liquidの制御構造）
 
-ここでは項目が多いので極めて簡単な説明だけになっています。
+項目が多いので、ここでの説明は極めて簡単になっています。
 詳しい説明は[Liquidのドキュメント](https://shopify.github.io/liquid/tags/control-flow/)を見てください。
 
 ### コントロール・フロー
@@ -146,7 +146,7 @@ for文の中のelseは条件が成り立たなかった時に出力される
 - forループにはlimit/offset/range/reversedのオプションをつけることができる
 - forの中でcycle （項目のリスト）を使うことができる。
 1回目はcycleの引数リストの最初の項目、2回めは2番めの項目・・・と出力される
-- tablerow => ループの中でHTMLの表の行を出力する（tdタグなどが自動的に付く）。
+- tablerow => ループの中で表の行を出力する（tdタグなどが自動的に付く）。
 cols/limit/offset/rangeのオプションをつけることができる
 
 tablerowはHTMLの表を作れるので便利です。
@@ -156,9 +156,11 @@ HTMLテンプレートであるLiquidらしい機能です。
 
 - comment 〜 endcomment => コメントとして扱われHTML出力されない
 - raw 〜 endraw => Liquidの解釈をせずにそのまま出力される。
-{%raw%}例えば`{{  }}`や`{%  %}`をそのまま出力したい場合に使う。{%endraw%}
+{%raw%}`{{  }}`や`{%  %}`{%endraw%}をそのまま出力したい場合に使う。
 - liquid => 複数行にわたりLiquidの構文を書くことができる。
-{%raw%}いちいち`{%  %}`で囲まずにすむのがありがたい{%endraw%}
+いちいち{%raw%}`{%  %}`{%endraw%}で囲まずにすむのがありがたい。
+ただし、Liquidのバージョン5以降の機能で、GitHubではまだサポートされていない。
+（GitHubの2022/8/30時点のLiquidバージョンは4.0.3）
 - echo => タグの中で用いられ、echoの次の要素を出力する。
 フィルターを使える
 - render => 他のテンプレートファイルを読み込む
@@ -200,24 +202,27 @@ GitHub Pagesのサイトは`https://username.github.io/`以下に展開されま
 例えば、そのサイトのベース名が`jekyll-tutorial-for-beginners`であれば、そのサイトは`https;//username.github.io/jekyll-tutorial-for-beginners/`以下に展開されることになります。
 
 URLの指定には3通りがあります。
-例えばサイトのルートにあるabc.htmlは
+絶対URL、絶対パスURL、相対URLの3つです。
+なお「絶対パスURL」はここでの呼び方で、一般的な呼び方は定まっていないようです。
 
-- https;//username.github.io/jekyll-tutorial-for-beginners/abc.html これを絶対URLといいます
-- /jekyll-tutorial-for-beginners/abc.html これはいろいろの呼び方をされていますが、「[The URL Standard](https://url.spec.whatwg.org/)」によると絶対URLの一種で、「path-absolute-URL string」（絶対パスURL文字列）と言うようです。
-https:のついた絶対URLとは振る舞いが違います。
-- 仮にブラウザで`https;//username.github.io/jekyll-tutorial-for-beginners/xyz.html`を開いているとします。
-そのとき、現在の画面のURLとabc.htmlのURLは最後の部分の違いだけです。
-遷移先のURLを単に「abc.html」と表現することを相対URLといいます。
-現在画面のURLと相対URLを組み合わせると絶対URLを求めることができるので、これもURLの表現として可能です。
+例えばJekyllディレクトリのルートにあるabc.htmlはウェブ上では次のように表せます。
+
+- `https;//username.github.io/jekyll-tutorial-for-beginners/abc.html` これを絶対URLという
+- `/jekyll-tutorial-for-beginners/abc.html` これはいろいろの呼び方をされているが、「[The URL Standard](https://url.spec.whatwg.org/)」によると絶対URLの一種で、「path-absolute-URL string」（絶対パスURL文字列）と言う。
+- 相対URLでは「そのURLにアクセスする直前にブラウザが開いているURL」が必要になる。
+仮にブラウザで`https;//username.github.io/jekyll-tutorial-for-beginners/xyz.html`を開いているとする。
+そのURLとabc.htmlのURL（`https;//username.github.io/jekyll-tutorial-for-beginners/abc.html`）の違いは最後の部分だけ。
+そこで「abc.html」と「ブラウザが開いているURL」を組み合わせて絶対URLを求めることができる。
+遷移先のURLを「abc.html」と表現することを相対URLという。
 
 このうち2番めが問題になります。
-`/`（ルート）がどこに設定されるのかはサーバによります。
-GitHub Pagesでは`/`は`https;//username.github.io/`と解釈されます。
-ですから、Jekyllで構築したサイトのルート`https;//ユーザ名.github.io/jekyll-tutorial-for-beginners/`はGitHubのルートとずれがあるわけです。
-この差をJekyllではBase URLといいます。
-正確には先頭にスラッシュをつけた`/jekyll-tutorial-for-beginners`がBase URLです。
+GitHub Pagesでは絶対パスURLのルート`/`は`https;//username.github.io/`と解釈されます。
+ですから`/jekyll-tutorial-for-beginners/abc.html`でabc.htmlに正しくアクセスできるわけですが、Jekyllディレクトリ上では`/abc.html`がファイルのパスになります。
+つまりウェブ上のルートとJekyllディレクトリのルートにずれがあるわけです。
+この差`/jekyll-tutorial-for-beginners`をJekyllではBase URLといいます。
+Base URLの先頭にはスラッシュがつくのに注意してください。
 
-relative_urlフィルターは流れてきた文字列の先頭にBase URLを付け加えます。
+relative\_urlフィルターは流れてきた文字列の先頭にBase URLを付け加えます。
 なお、Base URLは\_config.ymlの中で定義します。
 
 {%raw%}
@@ -225,13 +230,12 @@ relative_urlフィルターは流れてきた文字列の先頭にBase URLを付
 _config.yml での定義
 baseurl: /jekyll-tutorial-for-beginners
 
-{{ "/assets/image/abc.png" | relative_url }}
 これにより、出力は次のようになる
+{{ "/assets/image/abc.png" | relative_url }}
 => /jekyll-tutorial-for-beginners/assets/images/abc.png
 ```
 {%endraw%}
 
-このことによって、サイトのルートがGitHubのルートに一致するようになります。
 なお、baseurlのデフォルト値は空文字列です。
 
 Base URLを定義するかどうかはサーバーのルートの設定で決まってきます。
@@ -249,7 +253,7 @@ Base URLを定義するかどうかはサーバーのルートの設定で決ま
 url: https://username.github.io
 ```
 
-文字列の最後にスラッシュはつきません。
+文字列の最後にスラッシュはつけません。
 デフォルト値は`https://lofalhost:4000`です。
 
 ### escape
@@ -317,9 +321,6 @@ jkl
 ```
 {%endraw%}
 
-結果は4行になっていますが、HTMLなのでブラウザ上の表示はつながります。
-このように、コンマ区切りのデータを配列にするときに良くつかいます。
-
 ### markdownify
 
 これは、Jekyllが拡張したフィルターです。
@@ -345,7 +346,7 @@ jkl
 
 {%raw%}
 ```
-{{ "<p>abcd</p> | remove: <p> | remove </p> }}
+{{ "<p>abcd</p>" | remove: <p> | remove </p> }}
 => abcd
 ```
 {%endraw%}
