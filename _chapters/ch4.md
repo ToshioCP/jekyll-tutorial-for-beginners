@@ -200,10 +200,8 @@ BundlerはGemfileを読み、そこに記述されているgemとその依存gem
 「Gemfile.lock」に書かれたバージョンのgemを起動するには「bundle exec」コマンドを使います。
 例えば「bundle exec jekyll serve」は「jekyll」をserve引数付きで起動します。
 「bundle exec」なしで「jekyll serve」としないでください。
-もしそうすると「Gemfile.lock」とは無関係にjekyllを起動することになるので
-
-- JekyllをBundlerなしでインストール（例えば「gem install jekyll」など）していなければ、Jekyllを起動できない場合がある
-- バージョンの違うJekyllが起動される可能性がある。また、Jekyllが使用するgemも異なるバージョンが呼び出される可能性がある
+もしそうすると「Gemfile.lock」とは無関係にjekyllを起動することになるのでバージョンの違うJekyllが起動される可能性があります。
+また、Jekyllが使用するgemも異なるバージョンが呼び出される可能性があります。
 
 したがって、レポジトリ内では常に「bundle exec」をつけてgemを起動するようにしてください。
 
