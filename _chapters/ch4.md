@@ -81,7 +81,7 @@ $ git config --global core.editor エディタ名
 ここで、緑色のボタン「Code」をクリックし、ポップアップメニューの四角が斜めに重なっているアイコン（コピーを示すアイコン）をクリックします。
 そのとき、「HTTPS」「SSH」「GitHub CLI」の3つのタブが現れますが、ここでは「HTTPS」を使います。
 
-![clone](../assets/images/copy_icon.png)
+![clone]({{ "/assets/images/copy_icon.png" | relative_url }})
 
 クリックしても何も目に見える変化はありませんが、実はパソコンのクリップボードにレポジトリのアドレスがコピーされています。
 

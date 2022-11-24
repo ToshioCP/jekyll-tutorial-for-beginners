@@ -1,7 +1,6 @@
 theme: jekyll-theme-cayman
 show_downloads: true
 
-baseurl: /jekyll-tutorial-for-beginners
 lang: ja
 
 title: はじめてのJekyll + GitHub Pages

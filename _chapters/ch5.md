@@ -36,7 +36,7 @@ gemの`_layout`ディレクトリの`default.html`がCaymanのレイアウトを
 
 Caymanは次のようなレイアウト構成になっています。
 
-![Cayman layout](../assets/images/mypage_layout.png)
+![Cayman layout]({{ "/assets/images/mypage_layout.png" | relative_url }})
 
 - 上の青い部分が「ヘッダ」で、その中に「タイトル」「ディスクリプション」「ボタン」がある
 - 「ボタン」はレポジトリへのリンクとZIP、TAR.GZのダウンロードの3つ
@@ -218,7 +218,6 @@ description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 theme: jekyll-theme-cayman
 show_downloads: true
 
-baseurl: /jekyll-tutorial-for-beginners
 lang: ja
 
 title: はじめてのJekyll + GitHub Pages
@@ -233,8 +232,6 @@ exclude:
 ```
 
 - show_downloads => レポジトリのデータをダウンロードするボタンを有効にするときはtrue、無効にするときはfalse
-- baseurl => サイトのルートとGitHubのルートのずれを調整する。
-詳しくは第9章で説明。
 - lang => htmlタグに記述する言語を指定。デフォルトはen-US
 - collections => 共通のファイルをまとめたコレクションの記述。
 詳しくは第6章で説明。
@@ -252,7 +249,7 @@ $ bundle exec jekyll serve
 
 ここでブラウザを立ち上げ、「`localhost:4000`」を開きます。
 
-![index.md](../assets/images/mypage.png)
+![index.md]({{ "/assets/images/mypage.png" | relative_url }})
 
 
 - タイトルとディスクリプションには、フロントマターのタイトル、ディスクリプションがコピーされている

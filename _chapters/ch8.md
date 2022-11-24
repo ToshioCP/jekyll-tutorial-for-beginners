@@ -89,7 +89,7 @@ $ bundle exec jekyll serve
 
 ブラウザでlocalhost:4000を開きます。
 
-![ホーム画面](../assets/images/home.png)
+![ホーム画面]({{ "/assets/images/home.png" | relative_url }})
 
 写真が入るとイメージが良くなりますね。
 
@@ -146,7 +146,7 @@ Sample page をもっともっとよろしく！
 したがって、日本語のタイトルはフロントマターに記述すれば良いわけです。
 
 
-![ブログ記事](../assets/images/post.png)
+![ブログ記事]({{ "/assets/images/post.png" | relative_url }})
 
 ブログの仕組みがテーマに用意されていれば、記事の投稿は簡単です。
 今回使ったMinimal Mistakesは洗練されたデザインで機能も豊富です。

@@ -17,7 +17,7 @@ GitHub Pagesでウェブサイトを作るとき、背後でJekyllが動いて�
 
 - ブラウザでGitHub（<http://github.com/>）にアクセスする。
 
-![GitHub](../assets/images/github.png)
+![GitHub]({{ "/assets/images/github.png" | relative_url }})
 
 - 「Sign up」ボタン（右上の方）をクリックする。
 - 以下、いくつかの項目の入力を要求されるので「入力＝＞「continue」ボタンをクリック」を繰り返す。
@@ -33,7 +33,7 @@ GitHubを見渡すと、本名よりもニックネームの方が多いよう�
 GitHubにレポジトリ（gitレポジトリ）を作成します。
 今回はローカル（自分のパソコンのこと）にレポジトリを用意せず、GitHub上に直接作っていきます。
 
-![Create repository](../assets/images/github2.png)
+![Create repository]({{ "/assets/images/github2.png" | relative_url }})
 
 - GitHubのページを開き、右上の「+」ボタンをクリックし、ポップアップ・メニューから「New Repository」を選ぶ
 - レポジトリ名は何でも良い。ただし英語（半角文字）でスペースはハイフンに直す。これから作るウェブページに相応しいものを自分で決める。
@@ -70,7 +70,7 @@ README.mdの例
 ちなみに、私が作ったレポジトリはこんな感じです。
 背景が黒いのは、私がそのように設定したからで、初期設定は白です。
 
-![GitHub repository](../assets/images/github_repository.png)
+![GitHub repository]({{ "/assets/images/github_repository.png" | relative_url }})
 
 ## GitHub Pages の設定
 
@@ -114,7 +114,7 @@ theme: jekyll-theme-cayman
 ウェブページは`https://（ユーザ名）.github.io/（レポジトリ名）/`となっています。
 ブラウザからアクセスしてみてください。
 
-![GitHub page example](../assets/images/mypage.png)
+![GitHub page example]({{ "/assets/images/mypage.png" | relative_url }})
 
 これは私のウェブサイトですが、作成当初ではなく完成間近のものです。
 あなたのウェブページでは、内容は違ってもレイアウトは同じものが表示されていると思います。

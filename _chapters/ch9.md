@@ -194,36 +194,11 @@ HTMLテンプレートであるLiquidらしい機能です。
 ### relative_url
 
 ベースURLを加えたURLにします。
+Liquidでpage.urlを参照するときなどにrelative\_urlが必要になります。
 
-GitHubを例にとって説明します。
-ユーザ名がusernameであるとします。
-GitHub Pagesのサイトは`https://username.github.io/`以下に展開されます。
-そのスペースを分割していくつかのサイトを構築する場合、ベースURLを個々のサイトにつけます。
-例えば、そのサイトのベース名が`jekyll-tutorial-for-beginners`であれば、そのサイトは`https;//username.github.io/jekyll-tutorial-for-beginners/`以下に展開されることになります。
+詳しい説明が[第6章](ch6.html)の「home.html」にありますので、それを参照してください。
 
-URLの指定には3通りがあります。
-絶対URL、絶対パスURL、相対URLの3つです。
-なお「絶対パスURL」はここでの呼び方で、一般的な呼び方は定まっていないようです。
-
-例えばJekyllディレクトリのルートにあるabc.htmlはウェブ上では次のように表せます。
-
-- `https;//username.github.io/jekyll-tutorial-for-beginners/abc.html` これを絶対URLという
-- `/jekyll-tutorial-for-beginners/abc.html` これはいろいろの呼び方をされているが、「[The URL Standard](https://url.spec.whatwg.org/)」によると絶対URLの一種で、「path-absolute-URL string」（絶対パスURL文字列）と言う。
-- 相対URLでは「そのURLにアクセスする直前にブラウザが開いているURL」が必要になる。
-仮にブラウザで`https;//username.github.io/jekyll-tutorial-for-beginners/xyz.html`を開いているとする。
-そのURLとabc.htmlのURL（`https;//username.github.io/jekyll-tutorial-for-beginners/abc.html`）の違いは最後の部分だけ。
-そこで「abc.html」と「ブラウザが開いているURL」を組み合わせて絶対URLを求めることができる。
-遷移先のURLを「abc.html」と表現することを相対URLという。
-
-このうち2番めが問題になります。
-GitHub Pagesでは絶対パスURLのルート`/`は`https;//username.github.io/`と解釈されます。
-ですから`/jekyll-tutorial-for-beginners/abc.html`でabc.htmlに正しくアクセスできるわけですが、Jekyllディレクトリ上では`/abc.html`がファイルのパスになります。
-つまりウェブ上のルートとJekyllディレクトリのルートにずれがあるわけです。
-この差`/jekyll-tutorial-for-beginners`をJekyllではBase URLといいます。
-Base URLの先頭にはスラッシュがつくのに注意してください。
-
-relative\_urlフィルターは流れてきた文字列の先頭にBase URLを付け加えます。
-なお、Base URLは\_config.ymlの中で定義します。
+なお、ベースURLは\_config.ymlの中で定義します。
 
 {%raw%}
 ```
@@ -232,17 +207,11 @@ baseurl: /jekyll-tutorial-for-beginners
 
 これにより、出力は次のようになる
 {{ "/assets/image/abc.png" | relative_url }}
-=> /jekyll-tutorial-for-beginners/assets/images/abc.png
+=> https://ホスト名/jekyll-tutorial-for-beginners/assets/images/abc.png
 ```
 {%endraw%}
 
 なお、baseurlのデフォルト値は空文字列です。
-
-Base URLを定義するかどうかはサーバーのルートの設定で決まってきます。
-また、URL表現の１，３番すなわちhttpsから始まる絶対URLまたは相対URLを使っている限りはこの問題は起きません。
-ですから、複雑さを避けるには相対URLのみを使うのが良いと思います。
-
-ただし、Liquidでpage.urlを参照すると`/`から始まる絶対パスURLが帰ってくるので、relative_urlがどうしても必要になります。
 
 ### absolute_url
 

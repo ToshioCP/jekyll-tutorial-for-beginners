@@ -83,16 +83,53 @@ layout: default
 各ページへのリンクが順序なしリストになっています。
 
 href=の右のリンク先アドレスはLiquidで書かれています。
-`| relative_url`は左から流れ込んだ入力のアドレスに`_config.yml`で指定したBase URLを付け足します。
-ここでは、Base URLは`/jekyll-tutorial-for-beginners`です。
-最初のリンク先は
+`| relative_url`は左から流れ込んだ入力のアドレスに`_config.yml`で指定した`baseurl`を付け足します。
+`baseurl`を設定していなければ空文字列になります。
 
-```
-{%raw%}{{ "/index.html" | relative_url }}{%endraw%} => "/jekyll-tutorial-for-beginners/index.html"
-```
-となります。
-relative\_urlが必要かどうかは、JekyllソースデータのルートとGitHub上のルートにずれがあるかないかによります。
-一般には「relative\_urlフィルターをつけるのが最善」です。
+ここで注意しなければならないことがあります。
+`_config.yml`に`baseurl`を設定していなくても、GitHub Pagesではそのレポジトリ名を「自動的に」`baseurl`にしてしまうということです。
+
+少し詳しく説明しましょう
+例えば「user」という名前のGitHubユーザがレポジトリを作り、GitHub Pagesの機能をオンにしたとします。
+
+- GitHubは、そのユーザのGitHub Pages用のディスクスペースを割り当てる。ディスクスペースのルートを`/`とする
+- GitHubは、そのユーザ用のURLに`https://user.github.io`を割り当てる
+- そのディスクスペースのルート`/`はURLの`https://user.github.io/`に対応する
+- そのユーザが「sample」というレポジトリを作ってGitHub Pagesで公開する場合、HTMLファイルはディスクスペースの`/sample`以下に展開される
+- それはURL上では`https://user.github.io/sample`以下に展開される
+- したがって、sampleレポジトリにおけるルートはディスクスペースの`/sample`、URLの`https://user.github.io/sample`が対応する。
+
+ここで、URLの表現には３つのパターンがあることに注意してください。
+絶対URL、絶対パスURL、相対URLの3つです。
+なお「絶対パスURL」はここでの呼び方で、一般的な呼び方は定まっていないようです。
+例えば、`https://user.github.io/sample/abc.html`をブラウザが表示しているとします。
+そのとき`https://user.github.io/sample/xyz.html`へのリンクアドレスは
+
+- 絶対URL ⇒ `https://user.github.io/sample/xyz.html`
+- 絶対パスUR ⇒ `/sample/xyz.html`
+- 相対URL ⇒ `xyz.html`
+
+「絶対URL」と「相対URL」は問題が起こりませんが、絶対パスURLでは問題が発生する可能性があります。
+Jekyllのソースファイルではそのトップディレクトリをルート`/`にします。
+これは絶対URLでの`https://user.github.io/sample/`をルート`/`としているということです。
+ところがGituHub PagesのURLでは`/`はそれは`https://user.github.io/`が対応します。
+ここにずれが発生するのです。
+
+GitHubはこの差を埋めるためにJekyllの`baseurl`を`/sample`にしてしまうのです。
+これによりリンクは次のように変換されます。
+
+|リンク先の記述|変換後（ローカル）|変換後（GitHub Pages）|
+|:---|:---|:---|
+|`/abc.html`|`/abc.html`|`/abc.html`|
+|{%raw%}`{{ "/abc.html" | relative_url }}`{%endraw%}|`http://localhost/abc.html`|`https://user.github.io/sample/abc.html`|
+
+以上のことから、絶対パスURLには`relative_url`をつけておくことが重要です。
+
+site.baseurl is {{site.baseurl}}
+
+site.github.baseurl is {{site.github.baseurl}}
+
+baseurl is {{baseurl}}
 
 クラス`nav`はスタイルシート・ファイル「style.scss」で定義されています。
 「style.scss」は`/assets/css`フォルダに置きます。
@@ -124,7 +161,7 @@ li.nav{
 「index.md」「about.md」「toc.md」のフロントマターのレイアウト設定をdefaultからhomeに変更します。
 ここまでで、index.mdを表示するとコンテンツの最初に3つのリンクが横並びに表示されます。
 
-![index.mdのコナビ](../assets/images/コナビ.png)
+![index.mdのコナビ]({{ "/assets/images/コナビ.png" | relative_url }})
 
 ## コレクション
 
