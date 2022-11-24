@@ -87,7 +87,7 @@ href=の右のリンク先アドレスはLiquidで書かれています。
 `baseurl`を設定していなければ空文字列になります。
 
 ここで注意しなければならないことがあります。
-`_config.yml`に`baseurl`を設定していなくても、GitHub Pagesではそのレポジトリ名を「自動的に」`baseurl`にしてしまうということです。
+`_config.yml`に`baseurl`を設定していなくても、GitHub Pagesではそのレポジトリ名を「自動的に」`site.baseurl`にしてしまうということです。
 
 少し詳しく説明しましょう
 例えば「user」という名前のGitHubユーザがレポジトリを作り、GitHub Pagesの機能をオンにしたとします。
@@ -115,21 +115,17 @@ Jekyllのソースファイルではそのトップディレクトリをルー�
 ところがGituHub PagesのURLでは`/`はそれは`https://user.github.io/`が対応します。
 ここにずれが発生するのです。
 
-GitHubはこの差を埋めるためにJekyllの`baseurl`を`/sample`にしてしまうのです。
+GitHubはこの差を埋めるためにJekyllの`site.baseurl`を`/sample`にしてしまうのです。
 これによりリンクは次のように変換されます。
 
 |リンク先の記述|変換後（ローカル）|変換後（GitHub Pages）|
 |:---|:---|:---|
 |`/abc.html`|`/abc.html`|`/abc.html`|
 |{%raw%}`{{ "/abc.html" | relative_url }}`{%endraw%}|`http://localhost/abc.html`|`https://user.github.io/sample/abc.html`|
+|{%raw%}`{{ site.baseurl }}/abc.html`{%endraw%}|`/abc.html`|`/sample/abc.html`|
 
-以上のことから、絶対パスURLには`relative_url`をつけておくことが重要です。
 
-site.baseurl is {{site.baseurl}}
-
-site.github.baseurl is {{site.github.baseurl}}
-
-baseurl is {{baseurl}}
+以上のことから、絶対パスURLには`relative_url`をつけておくことが最善の方法です。
 
 クラス`nav`はスタイルシート・ファイル「style.scss」で定義されています。
 「style.scss」は`/assets/css`フォルダに置きます。
