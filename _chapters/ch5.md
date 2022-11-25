@@ -121,7 +121,7 @@ description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 コンテンツはindex.mdのフロントマターを除いた本体部分です。
 拡張子が「.md」なので、Markdownで記述します。
 この部分でもLiquidが使えます。
-（今回はLiquidを使いません）
+（以下の例ではLiquidを使っていません）
 
 index.mdの参考例：
 
@@ -165,7 +165,7 @@ Caymanのレイアウト`default.html`の31行目に`content`があります。
 サイトタイトルとサイトディスクリプションは`_config.yml`に書きます。
 これらは、ページがタイトル、ディスクリプションを持たない時にヘッダに表示されます。
 
-サイトディスクリプションの例：
+サイトタイトルとサイトディスクリプションの例：
 
 ```yaml
 theme: jekyll-theme-cayman
@@ -175,7 +175,7 @@ description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 ```
 
 ここで、yamlの書き方について簡単に触れておきましょう。
-詳しい説明は[yamlのウェブサイト](https://yaml.org/spec/1.2.2/)にあります。
+なお、詳しいことは[yamlのウェブサイト](https://yaml.org/spec/1.2.2/)を参照してください。
 
 リストは`-`と半角空白で表します。
 たとえば
@@ -188,7 +188,7 @@ description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 
 は3つの要素からなるリストです。
 `-`の後の半角空白を省略することはできません。
-このリストはRubyのデータ構造では配列になります。
+このリストはRubyのデータ構造では配列に相当します。
 
 ```ruby
 [ "abc", "def", "ghi" ]
@@ -201,7 +201,7 @@ description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
 ```
 
 コロンの後には半角空白が必要です。
-これはRubyのデータ構造ではハッシュになります。
+これはRubyのデータ構造ではハッシュに相当します。
 \_config.ymlをRubyのデータ構造で表すと、
 
 ```ruby

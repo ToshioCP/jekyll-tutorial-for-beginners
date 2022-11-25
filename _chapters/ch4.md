@@ -266,7 +266,7 @@ GitHub Metadata: No GitHub API authentication could be found. Some fields may be
 
 - cname などの一部のフィールドでは、自分自身を認証する必要がある。
 - それを解決するにはいくつかの方法がある
-- JEKYLL_GITHUB_TOKEN環境変数にPAT（以前https接続のために生成したパーソナル・アクセス・トークンのこと）をセットしてJekyllを起動する
+- JEKYLL_GITHUB_TOKEN環境変数にPAT（第7章で説明するhttps接続のために生成するパーソナル・アクセス・トークンのこと）をセットしてJekyllを起動する
 - `netrc` gemを用い、`~/.netrc`にユーザ名とPATを書く
 - OCTOKIT_ACCESS_TOKEN環境変数にPATをセットしてJekyllを起動する（1番目とほぼ同じ）
 

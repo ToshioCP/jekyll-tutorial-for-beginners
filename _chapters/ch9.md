@@ -13,7 +13,7 @@ Liquidには簡潔なドキュメントがありますので、参考にして�
 Jekyllは独自にLiquidの拡張をしています。
 これについては次のページに説明があります。
 
-<https://jekyllrb.com/docs/liquid/filters/>
+<https://jekyllrb.com/docs/liquid/>
 
 ## Liquidの基本
 
@@ -82,7 +82,7 @@ Jekyllで使える変数は[Jekyllのドキュメント](https://jekyllrb.com/do
 
 グローバル変数は次のとおりです。
 
-- site => サイトの情報。\_config.ymlに書かれた情報をもつオブジェクトを参照する（以下「オブジェクトを参照する」を略す）
+- site => サイトの情報。\_config.ymlに記述した情報が元になる
 - page => ページの情報。ページのフロントマターに書かれた情報
 - layout => レイアウトの情報。そのフロントマターの情報
 - content => ページのコンテンツ
@@ -97,7 +97,7 @@ site: http://username.github.io/
 この情報はドット記法を使って「site.url」で参照できます。
 
 （注）`site.url`を設定してレイアウトやコンテンツ内で使う場合、画面遷移のリンクには使わないでください。
-ローカルと公開サーバでurlが違うので、ローカルで遷移が機能しなくなります。
+ローカルと公開サーバでurlが違うので、ローカルでの遷移が機能しなくなります。
 
 グローバル変数の主なプロパティについては[Jekyllのドキュメント](https://jekyllrb.com/docs/variables/)を参照してください。
 
@@ -140,7 +140,7 @@ Liquidには算術演算子（加減乗除）がありません。
 ループをLiquidではイテレーションと呼んでいます。
 
 - for （条件）〜 else 〜 endfor。
-for文の中のelseは条件が成り立たなかった時に出力される
+elseは条件が成り立たなかった時に出力される
 - break => ループを中止して外にでる
 - continue => ループの現在の回をスキップして次の回にすすむ
 - forループにはlimit/offset/range/reversedのオプションをつけることができる
@@ -223,15 +223,15 @@ url: https://username.github.io
 ```
 
 文字列の最後にスラッシュはつけません。
-デフォルト値は`https://lofalhost:4000`です。
+デフォルト値は`https://localhost:4000`です。
 
 ### escape
 
 escapeはHTMLで特別な意味を持つ文字をエスケープします。
 
-- &lt; => &amp;lt;
-- &gt; => &amp;gt;
-- &amp; => &amp;amp;
+- &lt; ⇒ &amp;lt;
+- &gt; ⇒ &amp;gt;
+- &amp; ⇒ &amp;amp;
 
 これ以外にもエスケープ文字はあるので、詳細はインターネットで調べてみてください。
 とくに&lt;と>が現れるとHTMLタグと解釈されてしまうので、文字そのものを出力するにはescapeフィルターをかけてやります。

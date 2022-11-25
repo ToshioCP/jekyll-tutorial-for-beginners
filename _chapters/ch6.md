@@ -88,6 +88,9 @@ href=の右のリンク先アドレスはLiquidで書かれています。
 
 ここで注意しなければならないことがあります。
 `_config.yml`に`baseurl`を設定していなくても、GitHub Pagesではそのレポジトリ名を「自動的に」`site.baseurl`にしてしまうということです。
+`relative_url`は`site.baseurl`を`baseurl`同様に扱います。
+
+このことについては、[Michael Roseさんのウェブサイト](https://mademistakes.com/mastering-jekyll/site-url-baseurl/)が参考になります。
 
 少し詳しく説明しましょう
 例えば「user」という名前のGitHubユーザがレポジトリを作り、GitHub Pagesの機能をオンにしたとします。
@@ -112,20 +115,59 @@ href=の右のリンク先アドレスはLiquidで書かれています。
 「絶対URL」と「相対URL」は問題が起こりませんが、絶対パスURLでは問題が発生する可能性があります。
 Jekyllのソースファイルではそのトップディレクトリをルート`/`にします。
 これは絶対URLでの`https://user.github.io/sample/`をルート`/`としているということです。
-ところがGituHub PagesのURLでは`/`はそれは`https://user.github.io/`が対応します。
+ところがGituHub PagesのURLでは`/`に`https://user.github.io/`が対応します。
 ここにずれが発生するのです。
 
-GitHubはこの差を埋めるためにJekyllの`site.baseurl`を`/sample`にしてしまうのです。
+GitHubはこの差を埋めるためにJekyllの`site.baseurl`を`/sample`にします。
 これによりリンクは次のように変換されます。
 
-|リンク先の記述|変換後（ローカル）|変換後（GitHub Pages）|
-|:---|:---|:---|
-|`/abc.html`|`/abc.html`|`/abc.html`|
-|{%raw%}`{{ "/abc.html" | relative_url }}`{%endraw%}|`http://localhost/abc.html`|`https://user.github.io/sample/abc.html`|
-|{%raw%}`{{ site.baseurl }}/abc.html`{%endraw%}|`/abc.html`|`/sample/abc.html`|
+||リンク先の記述|変換後（ローカル）|変換後（GitHub Pages）|
+|-|:---|:---|:---|
+|1|`/abc.html`|`/abc.html`|`/abc.html`|
+|2|{%raw%}`{{ "/abc.html" | relative_url }}`{%endraw%}|`/abc.html`|`/sample/abc.html`|
+|3|{%raw%}`{{ site.baseurl }}/abc.html`{%endraw%}|`/abc.html`|`/sample/abc.html`|
 
+この表からローカル、GitHub Pagesでリンクが正しい（T）か正しくない（F）かは次のようにまとめられます。
 
-以上のことから、絶対パスURLには`relative_url`をつけておくことが最善の方法です。
+||ローカル|GitHub Pages|
+|-|:-:|:-:|
+|1|T|F|
+|2|T|T|
+|3|T|T|
+
+2と3は正しいリンクを実現しています。
+私の意見としては、2番めの`relative_url`をつけるのが最善の方法だと思います。
+
+ところで、上の表ではローカルでは常にリンクが正しく表示されるところが気になります。
+`/abc.html`とリンクを書くと、ローカルではエラーにならずにGitHub Pagesではエラーになるので、ローカルがテストとしては機能していないわけです。
+ローカルとGitHub PagesのT/Fを一致させたいときは`_config.yml`に
+
+```
+baseurl: /sample
+```
+
+を書くようにします。
+これによりローカルのルートもずれるので、`index.html`をブラウザで表示するには
+
+```
+http://localhost:4000/sample/index.html
+```
+
+をアクセスしなければなりません。
+`http://localhost:4000/index.html`ではインデックスページにアクセスできません。
+
+このようにすると、先程の表が
+
+||ローカル|GitHub Pages|
+|-|:-:|:-:|
+|1|F|F|
+|2|T|T|
+|3|T|T|
+
+となって、ローカルとGitHub PagesのT/Fが一致し、ローカルのテストで誤りを発見できます。
+
+baseurlを記述するかどうかはそれぞれのユーザの考えによります。
+私の意見としては、baseurlをつけるのがベターだと思います。
 
 クラス`nav`はスタイルシート・ファイル「style.scss」で定義されています。
 「style.scss」は`/assets/css`フォルダに置きます。
@@ -152,7 +194,7 @@ li.nav{
 
 インポートするファイル名がLiquidのオブジェクト`site.theme`になっています。
 `site.theme`の値は`_config.yml`で設定したthemeキーの値で、「jekyll-theme-cayman」です。
-同名のScssファイルがCaymanテーマの`_saas`ディレクトリの中に置かれています。
+同名のScssファイルがCaymanテーマの`_sass`ディレクトリの中に置かれています。
 
 「index.md」「about.md」「toc.md」のフロントマターのレイアウト設定をdefaultからhomeに変更します。
 ここまでで、index.mdを表示するとコンテンツの最初に3つのリンクが横並びに表示されます。
@@ -361,7 +403,7 @@ description: チュートリアルの目次
 この配列を章の番号順に並ぶように、chapをキーとしてソートし、変数chapsに代入する
 - for文は変数docに次々と配列要素を入れてループする
 - {%raw%}`{{doc.chap}}`{%endraw%}はそのページの章番号になる
-- {%raw%}`{{doc.title}}`{%endraw%}はそのページのタイトル
+- {%raw%}`{{doc.title}}`{%endraw%}はそのページのタイトル。`escape`フィルターはHTMLで表せない文字（`<`など）をエスケープする
 - {%raw%}`{{doc.url | relative_url}}`{%endraw%}はそのページのURLアドレスになる
 
 このようにして、各章へのリンクがMarkdownのリストとして生成されます。

@@ -21,7 +21,7 @@ chap: 7
 
 ワークツリーとはgitの対象になっている作業ディレクトリです。
 このチュートリアルの例でいえば、ローカルのサイトを保存しているディレクトリです。
-ワークツリーはある程度まとまった作業が済んだら、その結果をgitの管理するレポジトリに保存します。
+ワークツリーである程度まとまった作業が済んだら、その結果をgitの管理するレポジトリに保存します。
 保存はコミットによって行われます。
 
 ワークツリーが前回のコミットからどう変更されたかを確認するには「git status」を使います。
@@ -75,7 +75,8 @@ Gitは最後にコミットした時点までの情報を隠れディレクト�
 ここで考えなければならないのは、すべて記録しておくべきだろうか、ということです。
 
 - Gemfileは必要なgemの記述だから記録する
-- Gemfile.lockはGemfileのgemだけでなく、実行に必要なすべてのgemとそのバージョンを記述しているので記録する
+- Gemfile.lockはGemfileから生成したもの。Gemfileの内容によってはPC環境ごとに違うファイルが生成される。
+したがって、レポジトリをクローンしたユーザごとにBundlerで生成すべきものなので記録しない。
 - \_config.ymlは記録する
 - index.mdは記録する
 - \_siteと.jekyll-cacheはJekyllが生成したフォルダで、Jekyllの起動に必要なわけではない。これは記録しない。
@@ -87,6 +88,7 @@ Gitは最後にコミットした時点までの情報を隠れディレクト�
 エディタで次のように書き、「.gitignore」という名前で保存します（ファイル名の先頭のドット（`.`）を忘れないようにしてください）。
 
 ```gitignore
+Gemfile.lock
 # Cache directory
 .jekyll-cache
 
@@ -116,7 +118,6 @@ Changes not staged for commit:
   (use "git add <file>..." to include in what will be committed)
         .gitignore
         Gemfile
-        Gemfile.lock
         index.md
 
 no changes added to commit (use "git add" and/or "git commit -a")
@@ -157,7 +158,6 @@ Your branch is up to date with 'origin/main'.
   (use "git restore --staged <file>..." to unstage)
         new file:   .gitignore
         new file:   Gemfile
-        new file:   Gemfile.lock
         modified:   _config.yml
         new file:   index.md
 ```
@@ -189,15 +189,14 @@ commit an idea to writing => 着想を書き留める
 ```
 $ git commit
 [main a516afb] Add Gemfile and index.md.
- 5 files changed, 103 insertions(+), 1 deletion(-)
+ 4 files changed, 103 insertions(+), 1 deletion(-)
  create mode 100644 .gitignore
  create mode 100644 Gemfile
- create mode 100644 Gemfile.lock
  create mode 100644 index.md
 ```
 
 - mainブランチのa516afb（から始まる）IDに「Add Gemfile and index.md.」というメッセージをつけて保存した
-- ファイルが5つ変更され、103行が追加され1行が削除された（実際には\_config.ymlで4行追加したのですが、1行削除されて5行追加されたようにgitが認識しています）。
+- ファイルが4つ変更され、103行が追加され1行が削除された（実際には\_config.ymlで4行追加したのですが、1行削除されて5行追加されたようにgitが認識しています）。
 - 新規ファイルがモード100644（ノーマルなファイル、オーナーのみ読み書き可、グループと一般ユーザは読みのみ可）で記録された
 
 このように、Gitにはファイルの内容だけでなくモードも記録されます。
