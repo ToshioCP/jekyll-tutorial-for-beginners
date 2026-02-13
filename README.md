@@ -23,7 +23,7 @@ JekyllとGitHub Pagesの初心者向けチュートリアルです。
 - そのディレクトリではRuby 3.3.4を使うように設定しておく。例えば、「mise use ruby@3.3.4」とコマンドラインから入力
 - bundle install
 - bundle exec jekyll serve
-- ブラウザで、localhost:4000 を開くとチュートリアルが表示される
+- ブラウザで、`http://localhost:4000/jekyll-tutorial-for-beginners/` を開くとチュートリアルが表示される
 
 # ライセンス
 
