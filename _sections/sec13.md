@@ -1,26 +1,28 @@
 ---
-layout: chapter
+layout: section
 title: Liquidの概要
-description: JekyllのHTMLテンプレート言語Liquidについて
-chap: 9
+description: Liquid言語の入門用レファランス
+chap: 3
+sec: 13
 ---
 
-この章では、Jekyllでサイトを作る上で中心となるLiquidを説明します。
-Liquidには簡潔なドキュメントがありますので、参考にしてください。
+この章では、Jekyllでサイトを作る上で中心となるLiquidを説明しますが、チュートリアルではなく、レファランス的な内容です。
+必要に応じて適宜参照してください。
+また、LiquidとJekyllには、わかりやすいドキュメントがありますので、そちらも参考にしてください。
 
-<https://shopify.github.io/liquid/>
+- [Liquidのドキュメント][1]
+- [JekyllのドキュメントのLiquidに関するページ][2]
 
-Jekyllは独自にLiquidの拡張をしています。
-これについては次のページに説明があります。
-
-<https://jekyllrb.com/docs/liquid/>
+ただし、これらは最新バージョンのドキュメントであり、GitHub Pagesで使われているバージョン（執筆時点では、Liquid 4.0.4, Jekyll 3.10.0）とは異なる部分があります。
+該当バージョンのドキュメントを手に入れるには、それぞれのGitHubレポジトリからソースコードをダウンロードし、それぞれのバージョンのドキュメントを生成する必要があります。
+その方法は後ほど説明します。
 
 ## Liquidの基本
 
 LiquidはHTMLの中に埋め込みます。
-その埋め込まれたHTMLをテンプレートと呼んでいます。
+その埋め込まれたHTMLやMarkdownをテンプレートと呼んでいます。
 ちょうどphp、あるいはRailsのeRubyに似ています。
-埋めこむ対象が3つあります（オブジェクト、タグ、フィルター）。
+Liquidは3つのもの（オブジェクト、タグ、フィルター）を埋め込みます。
 
 ### オブジェクト
 
@@ -77,29 +79,24 @@ escapeはHTMLで特殊な意味を持つ記号をエスケープします。
 
 ## Jekyllで使う変数
 
-Jekyllで使える変数は[Jekyllのドキュメント](https://jekyllrb.com/docs/variables/)に書かれています。
-変数はLiquidで使います。
+Jekyllで使える変数は[Jekyllのドキュメント][3]に書かれています。
 
-グローバル変数は次のとおりです。
+1. `site`: サイト全体に関わる設定やデータを保持。`_config.yml`の情報も`site`のプロパティになる
+    - `site.posts`: サイト内の全ブログ記事のリスト
+    - `site.pages`: サイト内の全固定ページのリスト
+    - `site.categories`: ブログ記事の全カテゴリーのデータ。次のセクションで詳しく説明
+2. `page`: ページ（または記事）固有の情報を保持。フロントマターの情報も`page`のプロパティになる
+    - `page.title`: タイトル
+    - `page.url`: ページのURL（`/about/index.html` など）
+    - `page.path`: ソースファイルの場所
+3. `layout`: レイアウトファイル（`_layouts/` 内のファイル）の中でのみ利用可能
+4. `content`: レイアウトファイルで使用。そのレイアウトを適用している「ページや記事の中身」が丸ごと代入される
+5. `jekyll`: Jekyllシステム自身の情報を保持
+    - `jekyll.version`: Jekyllのバージョン
+    - `jekyll.environment`: ビルド環境（`development`か`production`か）
+6. paginator: パジネーター。ブログ記事がたくさんある場合など、それをページに分割するときに使う
 
-- site => サイトの情報。\_config.ymlに記述した情報が元になる
-- page => ページの情報。ページのフロントマターに書かれた情報
-- layout => レイアウトの情報。そのフロントマターの情報
-- content => ページのコンテンツ
-- paginator => パジネーター。ブログ記事がたくさんある場合など、それをページに分割するときに使う
-
-siteが置かれるホストのURLを\_config.ymlに書いたとします。
-
-```yaml
-site: http://username.github.io/
-```
-
-この情報はドット記法を使って「site.url」で参照できます。
-
-（注）`site.url`を設定してレイアウトやコンテンツ内で使う場合、画面遷移のリンクには使わないでください。
-ローカルと公開サーバでurlが違うので、ローカルでの遷移が機能しなくなります。
-
-グローバル変数の主なプロパティについては[Jekyllのドキュメント](https://jekyllrb.com/docs/variables/)を参照してください。
+グローバル変数のプロパティの詳細については[Jekyllのドキュメント][3]を参照してください。
 
 ## Liquidのオペレーター
 
@@ -113,22 +110,21 @@ Liquidのオペレータはコントロールフロー（ifなど）やループ
 - &lt;=
 - or
 - and
-- contains => 左側の文字列が右側の文字列を含んでいればtrue
+- contains: 左側の文字列が右側の文字列を含んでいればtrue
 
-オペレータが複数ある場合は右から順に評価されます。
+`and`と`or`が複数ある場合は右から順に評価されます。
 また、かっこ`(  )`で評価順を変更することは**できません**。
 
-Liquidには算術演算子（加減乗除）がありません。
-その代わりにフィルターを使います。
+Liquidには二項演算しとしての算術演算子（加減乗除）はなく、フィルター（`plus`、`minis`）を使います。
 
 ## タグ（Liquidの制御構造）
 
-項目が多いので、ここでの説明は極めて簡単になっています。
-詳しい説明は[Liquidのドキュメント](https://shopify.github.io/liquid/tags/control-flow/)を見てください。
+項目が多いので、以下の説明は極めて簡単になっています。
+詳しい説明は[Liquidのドキュメント][4]を参照してください。
 
 ### コントロール・フロー
 
-コントロール・フローは条件分岐です。
+コントロール・フローは条件分岐のことです。
 他の言語と同様の条件分岐ができます。
 コントロール・フローは次の2種類です。
 
@@ -139,14 +135,13 @@ Liquidには算術演算子（加減乗除）がありません。
 
 ループをLiquidではイテレーションと呼んでいます。
 
-- for （条件）〜 else 〜 endfor。
-elseは条件が成り立たなかった時に出力される
-- break => ループを中止して外にでる
-- continue => ループの現在の回をスキップして次の回にすすむ
+- for （条件）〜 else 〜 endfor: elseは条件が成り立たなかった時に出力される
+- break: ループを中止して外にでる
+- continue: ループの現在の回をスキップして次の回にすすむ
 - forループにはlimit/offset/range/reversedのオプションをつけることができる
 - forの中でcycle （項目のリスト）を使うことができる。
 1回目はcycleの引数リストの最初の項目、2回めは2番めの項目・・・と出力される
-- tablerow => ループの中で表の行を出力する（tdタグなどが自動的に付く）。
+- tablerow: ループの中で表の行を出力する（tdタグなどが自動的に付く）。
 cols/limit/offset/rangeのオプションをつけることができる
 
 tablerowはHTMLの表を作れるので便利です。
@@ -154,22 +149,34 @@ HTMLテンプレートであるLiquidらしい機能です。
 
 ### テンプレート
 
-- comment 〜 endcomment => コメントとして扱われHTML出力されない
+- comment 〜 endcomment: コメントとして扱われHTML出力されない
 - raw 〜 endraw => Liquidの解釈をせずにそのまま出力される。
-{%raw%}`{{  }}`や`{%  %}`{%endraw%}をそのまま出力したい場合に使う。
-- liquid => 複数行にわたりLiquidの構文を書くことができる。
+{%raw%}`{{  }}`や`{%  %}`{%endraw%}をそのまま出力したい場合に使う
+
+以下は、Liquidのバージョン5以降の機能で、現時点のGitHubではまだサポートされていない。
+
+- liquid: 複数行にわたりLiquidの構文を書くことができる。
 いちいち{%raw%}`{%  %}`{%endraw%}で囲まずにすむのがありがたい。
-ただし、Liquidのバージョン5以降の機能で、GitHubではまだサポートされていない。
-（GitHubの2022/8/30時点のLiquidバージョンは4.0.3）
-- echo => タグの中で用いられ、echoの次の要素を出力する。
-フィルターを使える
-- render => 他のテンプレートファイルを読み込む
+（GitHubの2026/2/13時点のLiquidバージョンは4.0.4）
+- echo: タグの中で用いられ、echoの次の要素を出力する。フィルターに用いる
+- render: 他のテンプレートファイルを読み込む
 
 ### 変数への代入など
 
-- assign => 変数への代入をする
-- capture => 変数への代入をする
-- increment/ decrement => 引数に変数をとり、0/-1からはじめて変数を1ずつ増加／減少させ、その値をHTMLに出力する。
+- assign: 変数への代入をする
+- capture: 変数への代入をする。代入するものが長いときに用いられることが多い（下記の例参照）
+- increment / decrement: 引数に変数をとり、0/-1からはじめて変数を1ずつ増加／減少させ、その値をHTMLに出力する。
+
+assignとcaptureの例
+
+```
+{% assign my_limit = 5 %}
+{% capture question %}
+山といえば川<br>
+空といえば海<br>
+では宇宙といえば？
+{% endcapture %}
+```
 
 ## JekyllのLiquidで良く用いられるフィルター
 
@@ -178,7 +185,7 @@ HTMLテンプレートであるLiquidらしい機能です。
 
 ### default
 
-パイプの左側からの入力がnil、false、空文字列のいずれかであるときに引数の値を出力し、それ以外は入力をそのまま出力します。
+パイプの左側からの入力が`nil`、`false`、空文字列のいずれかであるときに引数の値を出力し、それ以外は入力をそのまま出力します。
 
 {%raw%}
 ```
@@ -193,30 +200,26 @@ HTMLテンプレートであるLiquidらしい機能です。
 
 ### relative_url
 
-ベースURLを加えたURLにします。
-Liquidでpage.urlを参照するときなどにrelative\_urlが必要になります。
-
-詳しい説明が[第6章](ch6.html)の「home.html」にありますので、それを参照してください。
-
-なお、ベースURLは\_config.ymlの中で定義します。
+ベースURL（`_config.yml`の中で定義）を先頭に付け加えたURLにします。
+Liquidで`page.url`を参照するときなどに`relative_url`が必要になります。
 
 {%raw%}
 ```
 _config.yml での定義
-baseurl: /jekyll-tutorial-for-beginners
+baseurl: /my-blog
 
 これにより、出力は次のようになる
-{{ "/assets/image/abc.png" | relative_url }}
-=> https://ホスト名/jekyll-tutorial-for-beginners/assets/images/abc.png
+{{ "/assets/images/abc.png" | relative_url }}
+=> /my-blog/assets/images/abc.png
 ```
 {%endraw%}
 
-なお、baseurlのデフォルト値は空文字列です。
+`baseurl`のデフォルト値は空文字列です。
 
 ### absolute_url
 
-文字列の先頭にsite.urlとsite.base_urlを加えます。
-前提として\_config.ymlにurlを登録することが必要です。
+文字列の先頭に`site.url`と`site.baseurl`を加えます。
+前提として`_config.yml`に`url`を登録することが必要です。
 
 ```yaml
 url: https://username.github.io
@@ -237,7 +240,7 @@ escapeはHTMLで特別な意味を持つ文字をエスケープします。
 とくに&lt;と>が現れるとHTMLタグと解釈されてしまうので、文字そのものを出力するにはescapeフィルターをかけてやります。
 
 これは、テーマの開発者やサイトの構築者とコンテンツ入力者が別のときにとりわけ重要です。
-例えばpage.titleにエスケープしなければならない文字が入っているかどうかはコンテンツ入力者しか分かりません。
+例えば`page.title`にエスケープしなければならない文字が入っているかどうかはコンテンツ入力者しか分かりません。
 開発者は特別な文字の有無に関わらずきちんとした出力を得るためにescapeを使います。
 
 {%raw%}
@@ -250,7 +253,7 @@ escapeはHTMLで特別な意味を持つ文字をエスケープします。
 
 HTMLタグを取り去りたいときに使います。
 markdownifyを使う後に使うことが多いと思います。
-marakdownifyの説明は後でします。
+markdownifyの説明は後でします。
 
 {%raw%}
 ```
@@ -300,14 +303,14 @@ jkl
 
 タイムスタンプを別の形式の時刻表示に切り換えます。
 形式の指定は引数の文字列で与えます。
-形式には[strftime](https://www.ibm.com/docs/ja/zos/2.2.0?topic=functions-strftime-convert-formatted-time)が用いられます。
+形式には[strftime][5]が用いられます。
 
 {%raw%}
 ```
 {{ "2022-8-21" | date: "%Y 年 %m 月 %e 日" }}
 => 2022 年 08 月 21 日
 ```
-{%endraw%}
+{% endraw %}
 
 ### remove
 
@@ -315,7 +318,14 @@ jkl
 
 {%raw%}
 ```
-{{ "<p>abcd</p>" | remove: <p> | remove </p> }}
+{{ "<p>abcd</p>" | remove: "<p>" | remove "</p>" }}
 => abcd
 ```
-{%endraw%}
+{% endraw %}
+
+
+[1]: https://shopify.github.io/liquid/
+[2]: https://jekyllrb.com/docs/liquid/
+[3]: https://jekyllrb.com/docs/variables/
+[4]: https://shopify.github.io/liquid/tags/control-flow/
+[5]: https://www.ibm.com/docs/ja/zos/2.2.0?topic=functions-strftime-convert-formatted-time

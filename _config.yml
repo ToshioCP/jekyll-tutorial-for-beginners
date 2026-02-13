@@ -1,14 +1,46 @@
-theme: jekyll-theme-cayman
-show_downloads: true
-
+# Site settings
+title: はじめてのJekyll + GitHub Pages
+author: "Toshio Sekiya"
+email: lxboyjp@gmail.com
+description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
+domain: "toshiocp.github.io"
+url: "https://toshiocp.github.io"
+baseurl: "/jekyll-tutorial-for-beginners"
+github_username: toshiocp
 lang: ja
 
-title: はじめてのJekyll + GitHub Pages
-description: JekyllとGitHub Pagesを使って静的ウェブサイトを作る
+# Build settings
+# ---- GitHub Pages requires the following settings ----
+lsi: false
+safe: true
+incremental: false
+highlighter: rouge
+gist:
+  noscript: false
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
+# ------------------------------------------------------
+
+plugins:
+  - jekyll-feed
 
 collections:
-  chapters:
+  sections:
     output: true
 
 exclude:
+  - Gemfile
+  - Gemfile.lock
   - README.md
+  - .ruby-version
+  - mise.toml
+  - .gitignore
+  - _config.yml
+  - _site
+  - .jekyll-cache
+  - .jekyll-metadata
+
+# Cayman theme settings
+theme: jekyll-theme-cayman
+show_downloads: true

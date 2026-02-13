@@ -1,0 +1,5 @@
+{%- comment -%}
+  Return the url of the section specified by include.sec.
+{%- endcomment -%}
+{%- assign s = site.sections | where:"sec", include.sec -%}
+{{ s[0].url | relative_url }}

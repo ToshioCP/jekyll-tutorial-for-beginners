@@ -1,0 +1,10 @@
+# Chapters.yml
+- id: 1
+  title: Jekyllの基礎
+- id: 2
+  title: GitHub Pages
+- id: 3
+  title: レイアウトの仕組みとLiquid
+- id: 4
+  title: 付録
+  

@@ -4,3 +4,7 @@ Gemfile.lock
 
 # HTML directory created by Jekyll
 _site
+
+# Ruby version configuration files
+mise.toml
+.ruby-version

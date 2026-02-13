@@ -1,21 +1,28 @@
 <ul class="nav">
   <li>
-    <a href={{ "/index.html" | relative_url }}>トップページ</a>
+    <a href={{ site.baseurl }}{% link index.md %}>トップページ</a>
   </li>
   <li class="nav">
-    <a href={{ "/about.html" | relative_url }}>Aboutページ</a>
+    <a href={{ site.baseurl }}{% link about.md %}>Aboutページ</a>
   </li>
   <li class="nav">
-    <a href={{ "/toc.html" | relative_url }}>目次</a>
+    <a href={{ site.baseurl }}{% link toc.md %}>目次</a>
   </li>
-  {% if page.chap > 1  %}
-    <li class="nav">
-      <a href="ch{{page.chap|minus: 1}}.html">前の章</a>
-    </li>
-  {% endif %}
-  {% if page.chap < site.chapters.size %}
-    <li class="nav">
-      <a href="ch{{page.chap|plus: 1}}.html">次の章</a>
-    </li>
+
+  {% comment %} Use pathname to check if "current page" is included in the collection {% endcomment %}
+
+  {% assign match = site.sections | where: "path", page.path %}
+  {% if match.size > 0 %}
+    {% if page.sec > 1  %}
+      <li class="nav">
+        <a href="sec{{page.sec|minus: 1}}.html">前のセクション</a>
+      </li>
+    {% endif %}
+    {% if page.sec < site.sections.size %}
+      <li class="nav">
+        <a href="sec{{page.sec|plus: 1}}.html">次のセクション</a>
+      </li>
+    {% endif %}
   {% endif %}
 </ul>
+

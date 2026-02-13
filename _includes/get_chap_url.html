@@ -1,0 +1,16 @@
+{%- comment -%}
+  Return the url of the first section in the chapter specified by include.chap.
+{%- endcomment -%}
+{%- assign target_chap = include.chap | plus: 0 -%}
+{%- assign first_sec = nil -%}
+{%- assign sorted_sections = site.sections | sort: 'sec', 'last' -%}
+{%- for sec in sorted_sections -%}
+  {%- assign sec_chap = sec.chap | plus: 0 -%}
+  {%- if sec_chap == target_chap -%}
+    {%- assign first_sec = sec -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if first_sec -%}
+  {{ first_sec.url | relative_url }}
+{%- endif -%}

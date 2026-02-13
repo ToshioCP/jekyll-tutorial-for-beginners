@@ -1,5 +1,5 @@
 source "https://rubygems.org"
 
-gem "github-pages", "~> 227", group: :jekyll_plugins
-gem "webrick"
-gem "netrc"
+ruby "3.3.4"
+
+gem "github-pages", "~> 232", group: :jekyll_plugins

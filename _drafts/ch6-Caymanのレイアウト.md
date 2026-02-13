@@ -26,10 +26,10 @@ Caymanはgemで提供されるので、そのレイアウトはgemがおかれ�
         Homepage: https://github.com/pages-themes/cayman
         Path: /（gemのおいてあるディレクトリ）/jekyll-theme-cayman-0.2.0
         Reverse Dependencies: 
-                github-pages (227) depends on jekyll-theme-cayman (= 0.2.0)
+                github-pages (232) depends on jekyll-theme-cayman (= 0.2.0)
 ```
 
-gemの`_layout`ディレクトリの`default.html`がCaymanのレイアウトを記述したファイルになります。
+gemの`_layouts`ディレクトリの`default.html`がCaymanのレイアウトを記述したファイルになります。
 `default.html`はHTMLファイルですが、Liquidの記述も含まれています。
 
 ## レイアウトの構成

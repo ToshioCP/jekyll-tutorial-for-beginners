@@ -1,15 +1,5 @@
 ---
 layout: default
 ---
-<ul class="nav">
-  <li>
-    <a href={{ "/index.html" | relative_url }}>トップページ</a>
-  </li>
-  <li class="nav">
-    <a href={{ "/about.html" | relative_url }}>Aboutページ</a>
-  </li>
-  <li class="nav">
-    <a href={{ "/toc.html" | relative_url }}>目次</a>
-  </li>
-</ul>
+{% include doc_nav.html %}
 {{ content }}
